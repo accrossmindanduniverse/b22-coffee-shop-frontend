@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// pages
+import Home from '../src/components/home/home'
+import SignUp from '../src/components/sign-up/signUp'
+import productCust from '../src/components/product/productCust'
+import productDetail from './components/product/product-detail/productDetail'
+import FavoriteProduct from '../src/components/product/favoriteProduct/favoriteProduct';
+import ProductDetail from '../src/components/product/product-detail/productDetail';
+
+import React, { Component } from 'react'
+
+export default class App extends Component {
+  state = {
+    number: 0
+  }
+  render() {
+    return (
+      <div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path='/' component={Home}/>
+          <Route path='/signup' component={SignUp}/>
+          <Route path='/product-cust' component={productCust}/>
+          <Route path='/product-detail' component={productDetail}/>
+          <Route path='/favorite-product' component={FavoriteProduct}/>
+          <Route path='/product-detail' component={ProductDetail}/>
+        </Switch>
+      </BrowserRouter>
+      </div>
+    )
+  }
 }
-
-export default App;

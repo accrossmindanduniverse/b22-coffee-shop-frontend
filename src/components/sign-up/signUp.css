@@ -1,0 +1,58 @@
+body {
+  font-family: 'Rubik';
+}
+
+.login {
+  background-color: #FFBA33;
+  box-shadow: 2px 2px 10px #FFBA33;
+}
+
+.sign-up-form {
+  padding-left: 550px;
+}
+
+.eating {
+  background-size: cover;
+  background-position: center;
+  width: 1500px;
+  height: 1280px;
+}
+
+.sign-up-text {
+ color: rgba(106, 64, 41, 1);
+}
+
+.form-input {
+  width: 500px;
+}
+
+.btn {
+  width: 500px;
+  height: 70px;
+  border-radius: 12px;
+}
+
+#btn-yellow {
+  background-color: #FFBA33;
+  box-shadow: 2px 2px 10px #FFBA33;
+  border: 0px;
+}
+
+.member-offer {
+  width: 1300px;
+  position: relative;
+  right: 900px;
+  top: 70px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.special-brown {
+  color:rgb(106, 64, 41, 1);
+}
+
+.coffee2020 {
+  position: relative;
+  right: 305px;
+}

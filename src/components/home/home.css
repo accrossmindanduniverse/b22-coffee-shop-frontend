@@ -1,0 +1,140 @@
+.parent {
+  font-family: 'Rubik';
+  overflow-x: hidden;
+}
+
+.banner {
+  background-image: url('../../assets/home-background.png');
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  width: 100vw;
+  height: 900px;
+}
+
+
+.slogan {
+  width: 100vw;
+}
+
+.navlist {
+  width: 100vw;
+}
+
+.primary-btn {
+  box-shadow: 2px 2px 15px #FFBA33;
+  background-color: #FFBA33;
+}
+
+.primary-brown-text {
+  color:rgb(106, 64, 41, 1);
+}
+
+.primary-brown-bg {
+  background-color: #6A4029;
+}
+
+.left-btn {
+  color: #6A4029;
+  border: 2px solid #6A4029;
+}
+
+.right-btn {
+  color: white;
+  background-color: #6A4029;
+}
+
+.right-btn:hover {
+  background-color: #b66235;
+  color: #6A4029;
+  border: 2px solid #6A4029;
+}
+
+.left-btn:hover {
+  color: white;
+  background-color: #d1a187;
+}
+
+.nav-hover:hover {
+  color: #6A4029;
+  font-weight: bold;
+}
+
+.first-content {
+  width: 600px;
+}
+
+.stores-info {
+  width: 1200px;
+  height: 150px;
+}
+
+.order-btn {
+  border: 2px solid #FFBA33;
+  color: #6A4029;
+  font-weight: bold;
+  width: 200px;
+}
+
+.order-btn:hover {
+  background: #FFBA33;
+  text-transform: none;
+}
+
+.container-2nd {
+  width: 100wh;
+  height: auto;
+  background: #fffafa;
+}
+
+.stores-offer {
+  width: 400px;
+  height: auto;
+  border-radius: 20px;
+}
+
+.bg-world-map {
+  background-color: white;
+}
+
+.map-spot-txt {
+  width: 600px;
+}
+
+.world-img {
+  width: 1060px;
+  height: 537.77px;
+}
+
+.partners-container {
+  height: auto;
+  width: auto;
+}
+
+.customers-love {
+  width: 600px;
+}
+
+.customer-testi {
+  width: 500px;
+  height: 260px;
+  padding: 30px;
+}
+
+
+.promo-container {
+  bottom: 250px;
+  width: 1200px;
+  height: 200px;
+}
+
+.product-and-engage {
+  position: relative;
+  left: 140%;
+}
+
+.footer {
+  background-color: rgb(241, 241, 241);
+  height: 375px;
+  width: 200vh;
+}

@@ -1,0 +1,99 @@
+.parent {
+  height: 100vh;
+  width: 100vw;
+  background: #ffff;
+}
+
+.navbar {
+  position: relative;
+  background-color: white;
+  height: 100px;
+}
+
+.primary-brown {
+  color: rgba(106, 64, 41, 1);
+}
+
+.primary-brown-background {
+  background: rgba(106, 64, 41, 1);
+}
+
+.promo-box {
+  width: 500px;
+}
+
+.box-1 {
+  background: rgba(106, 64, 41, 1);
+  width: 360px;
+  height: 450px;
+  border-radius: 15px;
+}
+
+.box-2 {
+  position: absolute;
+  background: black;
+  width: 335px;
+  height: 522px;
+  border-radius: 15px;
+}
+
+.box-3 {
+  position: absolute;
+  background: rgba(255, 203, 101, 1);
+  width: 305px;
+  height: 592px;
+  border-radius: 15px;
+}
+
+.product-and-engage {
+  position: relative;
+  left: 135%;
+}
+
+.footer-bg {
+  background: #F8F8F8;
+}
+
+.chat-notif {
+  bottom: 20px;
+  right: 95%;
+}
+
+.text-one {
+  font-size: 10px;
+}
+
+
+.dashed-border {
+  width: 257px;
+  border: black;
+  border-top-style: dashed;
+}
+
+.grid-product {
+  border-radius: 25px;
+  width: 230px;
+  height: 430px;
+  padding: 60px;
+}
+
+.active:hover {
+  color: #6A4029;
+}
+
+.active:active {
+  border-bottom: 2px solid #6A4029;
+}
+
+.apply-btn {
+  height: 100%;
+}
+
+.promo-container {
+  width: 600px;
+}
+
+.grid-box {
+  height: fit-content;
+  position: relative;
+}
