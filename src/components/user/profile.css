@@ -1,0 +1,140 @@
+.radio {
+  display: block;
+}
+
+.radio .item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #6A4029;
+  border-radius: 7px;
+  background-color: transparent;
+}
+
+.radio input {
+  display: none;
+}
+
+.radio .item::after {
+  position: absolute;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #6A4029;
+  content: '';
+  border-radius: 11px;
+  cursor: pointer;
+}
+
+.radio input:checked + .item {
+  background-color: #FFBA33;
+}
+
+body {
+  font-family: Rubik;
+}
+
+.profile-banner {
+  background-image: url('../../assets/nathan-dumlao-XOhI_kW_TaM-unsplash\ 1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 1430px;
+}
+
+.navbar {
+  position: relative;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.text-one-bg {
+  background-color: rgba(106, 64, 41, 1);
+}
+
+.save-changes-color {
+  color: rgba(106, 64, 41, 1);
+}
+
+.text-two-bg { 
+  background-color: #FFBA33;
+}
+.user-border {
+  border: 3px solid rgba(106, 64, 41, 1);
+}
+
+.user-description {
+  width: 310px;
+  height: 500px;
+}
+
+.user-profile-box {
+  font-family: 'Rubik';
+  width: 310px;
+  height: 200px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.user-profile {
+  border-bottom: 15px solid rgba(106, 64, 41, 1) ;
+}
+
+#user-contacts {
+  position: absolute;
+  width: 800px;
+  left: 480px;
+  height: 500px;
+}
+
+.primary {
+  font-family: 'Poppins', sans-serif;
+}
+
+.user-contact-modal {
+  line-height: 50px;
+}
+
+.bottom-border {
+  border-bottom: 1px solid black;
+  width: 300px;
+}
+
+.bottom-border-2nd {
+  border-bottom: 1px solid black;
+  width: 500;
+}
+
+.primary-shadow {
+  text-shadow: 0px 15px 20px rgba(255, 255, 255, 0.26);
+}
+
+.user-details {
+  position: absolute;
+  width: 800px;
+  height: 500px;
+  bottom: -350px;
+  border-radius: 6px;
+}
+
+.details-pen {
+  padding-right: 80%;
+}
+
+.nav-hover:hover {
+  color: #6A4029;
+  font-weight: bold;
+}
+
+
+.product-and-engage {
+  position: relative;
+  left: 135%;
+}

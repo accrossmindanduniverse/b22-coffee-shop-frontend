@@ -1,6 +1,5 @@
 .parent {
   font-family: 'Rubik';
-  overflow-x: hidden;
 }
 
 .banner {
@@ -26,10 +25,6 @@
   background-color: #FFBA33;
 }
 
-.primary-brown-text {
-  color:rgb(106, 64, 41, 1);
-}
-
 .primary-brown-bg {
   background-color: #6A4029;
 }
@@ -53,11 +48,6 @@
 .left-btn:hover {
   color: white;
   background-color: #d1a187;
-}
-
-.nav-hover:hover {
-  color: #6A4029;
-  font-weight: bold;
 }
 
 .first-content {
@@ -123,8 +113,6 @@
 
 
 .promo-container {
-  bottom: 250px;
-  width: 1200px;
   height: 200px;
 }
 

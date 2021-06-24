@@ -28,14 +28,10 @@
   background: rgba(106, 64, 41, 1);
 }
 
-.delivery-padding {
-  padding-left: 105px;
-}
 
 .delivery-text {
-  height: 600px;
-  width: 500px;
-  position: relative;
+  height: auto;
+  width: auto;
 }
 
 .delivery-height {

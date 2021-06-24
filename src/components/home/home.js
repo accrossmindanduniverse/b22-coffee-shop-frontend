@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import hazelnut from '../../assets/hazelnut.png'
 import pinky from '../../assets/pinky.png'
 import wings from '../../assets/wings.png'
@@ -11,45 +10,20 @@ import reddit from '../../assets/reddit.png'
 import amazon from '../../assets/amazon.png'
 import discord from '../../assets/discord.png'
 import spotify from '../../assets/spotify.png'
-import coffee1 from '../../assets/coffee-1.png'
 import './home.css';
-import { AiFillInstagram, AiFillTwitterCircle, AiFillFacebook, AiOutlineCheck } from 'react-icons/ai'
+import { AiOutlineCheck } from 'react-icons/ai'
 import { FiSearch } from 'react-icons/fi'
 import { BsFillPersonFill, BsPeopleFill } from 'react-icons/bs'
 import { ImLocation2 } from 'react-icons/im'
 import teamWork from '../../assets/team-work.png'
-import { faRandom } from '@fortawesome/free-solid-svg-icons'
+import Footer from '../footer/footer'
 
 
-function Home(props) {
+function Home() {
 
   return (
   <div className='parent'>
     <div className='banner w-screen'>
-    <div className="navbar space-x-14 flex-row relative bg-white h-20 justify-center items-center flex m-auto w-full space-x-44">
-  
-      <div className="primary-brown-text pl-10 flex flex-row space-x-7 w-80">
-        <img src={coffee1} alt=""/>
-        <div>
-          <p className="font-bold text-xl" href>
-            Coffee Shop
-          </p>
-        </div>
-        </div>
-            <div className='relative m-auto navlist items-center justify-center flex flex-row'>
-              <div className='space-x-24 w-auto'>
-                <Link className="nav-hover" to='/'>Home</Link>
-                <Link className="nav-hover" to='/product-cust'>Product</Link>
-                <Link className="nav-hover" to="/payment-delivery">Your Cart</Link>
-                <Link className="nav-hover" to="/history">History</Link>
-              </div>
-              <div className="flex-1 flex flex-row relative space-x-24 w-auto justify-center items-center font-bold primary-brown-text">
-                <Link to="/login">Login</Link>
-                <Link to='/signup' className="w-32 h-10 rounded-full flex justify-center items-center primary-btn">Sign Up</Link>
-              </div>
-            </div>
-      </div>
-
     <div className="flex flex-col space-y-10 pt-7">
     <div className="w-full relative flex justify-end items-end pr-20">
         <div className="pr-28 relative">
@@ -72,9 +46,9 @@ function Home(props) {
         
       </div>
 
-      <div class="flex flex-row bg-white rounded-2xl shadow-2xl justify-center items-center relative top-24 m-44">
+      <div class="flex flex-col md:flex-row bg-white rounded-2xl shadow-2xl justify-center items-center relative top-52 m-44">
 
-        <div class="flex justify-center items-center space-x-64 divide-x-2 h-44">
+        <div class="flex md:justify-center items-center space-x-64 divide-x-2 h-44">
 
           <div class="flex flex-row space-x-5 items-center relative">
   
@@ -411,7 +385,7 @@ function Home(props) {
 
         <div className="flex flex-row promo-container bg-white rounded-2xl shadow-lg justify-center items-center relative m-auto">
 
-          <div className="flex-1 space-y-7 p-10">
+          <div className="space-y-7 p-10">
             <p className="font-bold text-4xl">Check our promo today!</p>
             <p className="text-xl">Let's see the deals and pick yours!</p>
           </div>
@@ -419,90 +393,7 @@ function Home(props) {
             <button className="w-52 h-16 rounded-xl text-xl primary-btn primary-brown-text font-bold">See Promo</button>
           </div>
         </div>
-        
-        <div className="footer flex pl-20 border-2 relative p-24">
-          <div className="flex flex-row">
-              <div>
-                <img src={coffee1} alt=""/>
-              </div>
-              <div className="pl-3">
-                <p className="font-bold text-xl">Coffee Shop</p>
-                <div className="relative right-9 pt-4 leading-8 w-64">
-                  <p>Coffee Shop is a store that sells some good meals, and especially coffee. We provide high quality beans</p>
-                </div>
-      
-                <div className="pt-10 flex flex-col relative space-x-5 space-y-4">
-                  <div className="flex flex-row space-x-5">
-                    <div className="text-center h-10 w-10 flex items-center justify-center rounded-full bg-yellow-400">
-                      <AiFillFacebook/>
-                    </div>
-                    <div className="text-center h-10 w-10 flex items-center justify-center rounded-full bg-yellow-400">
-                      <AiFillTwitterCircle/>
-                  </div>
-                  <div className="text-center h-10 w-10 flex items-center justify-center rounded-full bg-yellow-400">
-                   <AiFillInstagram/>
-                  </div>
-                  
-                  </div>
-  
-                  <div className="pt-4 flex text-black">
-                    <p>
-                      ©2020CoffeeStore
-                    </p>
-                  </div>
-              </div>
-              </div>
-      
-      
-            <div className="flex flex-row product-and-engage">
-              <div>
-                <div className="pr-44 space-y-2">
-                  <p className="font-bold text-xl">
-                    Product
-                  </p>
-                  <p>
-                    Download
-                  </p>
-                  <p>
-                    Pricing
-                  </p>
-                  <p>
-                    Locations
-                  </p>
-                  <p>
-                    Countries
-                  </p>
-                  <p>
-                    Blog
-                  </p>
-                </div>
-              </div>
-              <div className="flex-1">
-                <div className="w-44 space-y-2">
-                  <p className="font-bold text-xl">
-                    Engage
-                  </p>
-                  <p>
-                    Coffee Shop?
-                  </p>
-                  <p>
-                    FAQ
-                  </p>
-                  <p>
-                    About Us
-                  </p>
-                  <p>
-                    Privacy Policy
-                  </p>
-                  <p>
-                    Terms of Service
-                  </p>
-                </div>
-              </div>
-            </div>        
-          </div>
-        </div>
-    
+      <Footer/>        
       </div>
     </div>
     </div>
