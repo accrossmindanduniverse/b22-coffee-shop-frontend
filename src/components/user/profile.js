@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { BsPencil } from 'react-icons/bs'
 import Footer from '../footer/footer';
@@ -7,28 +7,34 @@ import './profile.css'
 
 const Profile = (props) => {
   const defaultData = props.auth.token
-
+  
   const [ contacts, setContacts ] = useState({
-    first_name: '',
-    last_name: '',
+    picture: '',
     name: '',
-    phone_number: '',
     user_address: '',
-    username: ''
+    username: '',
+    password: '',
+    phone_number: '',
+    first_name: '',
+    last_name: ''
   })
 
   const [ modal, setModal ] = useState({
     onClick: false
   })
 
-  const handleUpdateProfile = (data) => {
-    props.updateProfile(defaultData.refreshtoken, defaultData.userData.id, DataView).then(() => {
+  console.log(defaultData.refreshToken)
+
+  const handleUpdateProfile = () => {
+    props.updateProfile(defaultData.refreshToken, defaultData.userData.id, contacts).then(() => {
     setContacts({
       ...contacts,
-      username: '',
-      phone_number: '',
-      user_address: '',
+      picture: '',
       name: '',
+      user_address: '',
+      username: '',
+      password: '',
+      phone_number: '',
       first_name: '',
       last_name: ''
     })
@@ -40,8 +46,6 @@ const Profile = (props) => {
       console.log(err)
     })
   }
-
-  console.log(contacts)
 
   return (
   <div>
@@ -56,8 +60,26 @@ const Profile = (props) => {
       <div className="primary user-profile absolute bg-white user-description items-center rounded-lg p-4">
         <div className="flex-col flex items-center h-full justify-between">
           <div className='space-y-7'>
+          <div className='flex flex-row justify-between'>
             <div className='flex justify-center'>
               <img className="h-32 w-32 rounded-full" src={defaultData.userData.picture} alt=""/>
+              <input type="file" onChange={(e) => 
+                setContacts({
+                  ...contacts,
+                  picture: e.target.value
+                })
+              }/>
+            </div>
+            <div>
+              <button className="text-one-bg relative top-1 h-6 w-6 rounded-full text-center flex items-center justify-center">
+                <BsPencil className='text-white' onClick={() => {
+                  setModal({
+                    ...modal,
+                    onClick: true
+                  })
+                }}/>
+                </button>
+              </div>
             </div>
             <div className="flex-col leading-9 text-center">
               <div>
@@ -86,10 +108,6 @@ const Profile = (props) => {
                 <div className="pr-5 pb-2">
                     <button className="text-one-bg relative top-1 h-6 w-6 rounded-full text-center flex items-center justify-center">
                       <BsPencil className='text-white' onClick={() => {
-                        setModal({
-                          ...modal,
-                          onClick: true
-                        })
                         setContacts({
                           ...contacts,
                           username: defaultData.userData.username,
@@ -162,20 +180,20 @@ const Profile = (props) => {
           </div>
             <div id='contacts-pen' className="flex-1 flex justify-end items-end relative">
               <div className="details-pen pb-2">
-              <button className="text-one-bg relative top-1 h-6 w-6 rounded-full text-center flex items-center justify-center">
-                <BsPencil className='text-white' onClick={() => {
-                        setModal({
-                          ...modal,
-                          onClick: true
-                        })
-                        setContacts({
-                          ...contacts,
-                          name: defaultData.userData.name,
-                          first_name: defaultData.userData.first_name,
-                          last_name: defaultData.userData.last_name
-                        })
-                      }}/>
-            </button>
+                <button className="text-one-bg relative top-1 h-6 w-6 rounded-full text-center flex items-center justify-center">
+                  <BsPencil className='text-white' onClick={() => {
+                  setModal({
+                    ...modal,
+                    onClick: true
+                  })
+                  setContacts({
+                    ...contacts,
+                    name: defaultData.userData.name,
+                    first_name: defaultData.userData.first_name,
+                    last_name: defaultData.userData.last_name
+                  })
+                }}/>
+                </button>
               </div>
           </div>
         </div>
@@ -214,6 +232,17 @@ const Profile = (props) => {
                       setContacts({
                         ...contacts,
                         last_name: e.target.value
+                      })
+                    }/>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <label className="text-gray-400">Password: </label>
+                  <div className="bottom-border-2nd">
+                  <input value={contacts.password} type="password" placeholder='' onChange={(e) => 
+                      setContacts({
+                        ...contacts,
+                        password: e.target.value
                       })
                     }/>
                   </div>
@@ -302,6 +331,7 @@ const Profile = (props) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  user: state.user
 })
 
 const mapDispatchToProps = { updateProfile }

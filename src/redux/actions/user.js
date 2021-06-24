@@ -2,15 +2,16 @@ import { http } from "../../helpers/http"
 
 export const updateProfile = (token, id, userData) => {
   return async (dispatch) => {
+    const formData = new FormData()
+    formData.append('picture', userData.picture)
+    formData.append('first_name', userData.first_name)
+    formData.append('last_name', userData.last_name)
+    formData.append('name', userData.name)
+    formData.append('phone_number', userData.phone_number)
+    formData.append('username', userData.username)
+    formData.append('password', userData.password)
     try {
-      const { data } = await http(token, id).post(`http://localhost:3001/user/update-profile`, {
-        first_name: userData.first_name,
-        last_name: userData.lastname,
-        name: userData.name,
-        phone_number: userData.phone_number,
-        user_address: userData.user_address,
-        username: userData.username
-       })
+      const { data } = await http(token, id).put(`http://localhost:3001/user/update-profile`, formData)
       dispatch({
         type: 'UPDATE_PROFILE',
         payload: {
@@ -19,7 +20,7 @@ export const updateProfile = (token, id, userData) => {
       })
       console.log(data)
     } catch(err) {
-
+      console.log(err)
     }
   }
 }
