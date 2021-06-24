@@ -16,6 +16,7 @@ import ProductCust from './components/product/productCust';
 import cart from './components/cart/cart';
 import Profile from './components/user/profile'
 import Custom from './private/custom';
+import History from './components/history/history';
 
 class App extends Component {
   render() {
@@ -30,13 +31,17 @@ class App extends Component {
               <Route component={Profile}/>
             </Private>
             <Route path='/product-cust' component={ProductCust}/>
-            <Route path='/product-detail' component={productDetail}/>
             <Route path='/signup' component={SignUp}/>
             <Route path='/signin' component={SignIn}/>
-            <Route path='/payment-delivery' component={cart}/>
+            <Private path='/payment-delivery'>
+              <Route path='/payment-delivery' component={cart}/>
+            </Private>
             <Route path='/favorite-product' component={FavoriteProduct}/>
             <Private path='/product-detail/:id'>
               <Route component={ProductDetail}/>
+            </Private>
+            <Private path='/history'>
+              <Route component={History}/>
             </Private>
             <Route component={ProductDetail}/>
           </Switch>

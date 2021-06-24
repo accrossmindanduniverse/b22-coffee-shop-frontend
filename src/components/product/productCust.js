@@ -40,8 +40,6 @@ const ProductCust = (props) => {
     }
   }, [categoryNames[0]])
 
-  console.log(props.items.dataByCategory)
-
     return (
         <div className="parent">
           <div className='flex flex-row border-b-2 border-t-2'>

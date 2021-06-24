@@ -1,0 +1,63 @@
+body {
+  font-family: 'Rubik', sans-serif;
+}
+
+
+.history-banner {
+  background-image: url('../../assets/tyler-nix-jE-27l7V3NU-unsplash\ 2.png');
+  background-position: center;
+  background-size: cover;
+}
+
+.checkout-text {
+  text-shadow: 1px 2px black;
+}
+
+.custom-checkbox {
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #eee;
+}
+
+.custom-checkbox input:checked ~ .item {
+  background-color: #6A4029;
+}
+
+.item:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.custom-checkbox input:checked ~ .item:after {
+  display: block;
+}
+
+.custom-checkbox .item:after {
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}

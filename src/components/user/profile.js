@@ -9,20 +9,20 @@ const Profile = (props) => {
   const defaultData = props.auth.token
 
   const [ contacts, setContacts ] = useState({
-    username: '',
+    first_name: '',
+    last_name: '',
+    name: '',
     phone_number: '',
     user_address: '',
-    name: '',
-    first_name: '',
-    last_name: ''
+    username: ''
   })
 
   const [ modal, setModal ] = useState({
     onClick: false
   })
 
-  const handleUpdateProfile = (token, id, data) => {
-    props.updateProfile(token, id, data).then((res) => {
+  const handleUpdateProfile = (data) => {
+    props.updateProfile(defaultData.refreshtoken, defaultData.userData.id, DataView).then(() => {
     setContacts({
       ...contacts,
       username: '',
@@ -34,10 +34,8 @@ const Profile = (props) => {
     })
     setModal({
       ...modal,
-      onClick: false,
-      id: 0
+      onClick: false
     })
-    console.log(res)
     }).catch((err) => {
       console.log(err)
     })
@@ -51,7 +49,7 @@ const Profile = (props) => {
     <div className="pl-36 pt-52 flex">
       <div className="user-profile-box flex justify-center">
         <div className= "absolute top-52">
-          <p className="primary-shadow font-bold text-white text-4xl">User Profile</p>
+          <p className="primary-shadow primary font-bold text-white text-4xl">User Profile</p>
         </div>
       </div>
 
@@ -71,7 +69,7 @@ const Profile = (props) => {
             </div>
           </div>
             <div className="text-center">
-              <p>No Order Yet</p>
+              <p>No Orders Yet</p>
             </div>
         </div>
         <div>
@@ -153,7 +151,7 @@ const Profile = (props) => {
         </div>
       </div>
 
-    <div className="user-details border-2 bg-white flex-1">
+    <div className="user-details user-profile primary border-2 bg-white flex-1">
       <div className="flex flex-row">
 
       <div className="flex flex-col">
@@ -273,7 +271,7 @@ const Profile = (props) => {
                 </p>
               </div>
               <div className="flex-1 flex flex-col space-y-5 w-96">
-                <button className="text-one-bg h-16 rounded-2xl font-bold text-white text-xl" onClick={()=> handleUpdateProfile(defaultData.refreshToken, defaultData.userData.id, contacts)}>Save Change</button>
+                <button className="text-one-bg h-16 rounded-2xl font-bold text-white text-xl" onClick={() => handleUpdateProfile(contacts)}>Save Change</button>
                 <button className="text-two-bg save-changes-color h-16 rounded-2xl font-bold text-xl">Cancel</button>
               </div>
               <div className="flex-1 flex flex-col space-y-3 save-changes-color">

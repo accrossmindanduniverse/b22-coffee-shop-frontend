@@ -66,7 +66,21 @@ export const getDetailVariant = (id, key) => {
   }    
 }
 
-// http://localhost:3001/variant/detail/${id}?search${key}
+export const getAllTransactions = (token, id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await http(token, id).get(`http://localhost:3001/private/user-transactions`)
+      dispatch({
+        type: 'GET_ALL_TRANSACTIONS',
+        payload: {
+          items: data.data
+        }
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
 
 
 

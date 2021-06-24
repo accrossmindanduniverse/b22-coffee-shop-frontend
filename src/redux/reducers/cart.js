@@ -1,5 +1,6 @@
 const initialState = {
   items: [],
+  data2nd: [],
   transaction: [],
   totalItems: 0
 }
@@ -10,7 +11,7 @@ const carts = (state=initialState, action) => {
       console.log(action.payload)
       return {
         ...state,
-        items:[ state.items, ...[action.payload] ]
+          items: [ ...state.items, ...[ action.payload ] ]
       }
     }
     case 'POST_TRANSACTION': {

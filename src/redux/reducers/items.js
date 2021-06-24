@@ -1,6 +1,7 @@
 const initialState = {
   data: [],
   dataByCategory: [],
+  allTransactions: [],
   variantDetail: [],
   itemsAndVariants: [],
   dataById: []
@@ -36,6 +37,12 @@ const items = (state=initialState, action) => {
       return {
         ...state,
         dataById: action.payload.items
+      }
+    }
+    case 'GET_ALL_TRANSACTIONS': {
+      return {
+        ...state,
+        allTransactions: action.payload.items
       }
     }
     default: {
