@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import eating from '../../assets/eating.png'
-// import {toggleAuth} from '../../redux/actions/auth'
-// import { connect } from 'react-redux'
 import { FcGoogle } from 'react-icons/fc'
 import './signup.css'
-import { authSignUp, authSignIn } from './../../redux/actions/auth';
+import { authSignUp, authSignIn } from '../../redux/actions/auth';
 import { connect } from 'react-redux';
 import Footer from '../footer/footer';
 
