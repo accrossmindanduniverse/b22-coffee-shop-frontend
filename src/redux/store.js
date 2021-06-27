@@ -1,12 +1,11 @@
-import { applyMiddleware, createStore, compose } from 'redux'
+import { applyMiddleware, createStore, compose } from 'redux';
 
-import thunk from 'redux-thunk'
-import logger from 'redux-logger'
-import rootReducer from './reducers'
-import { persistStore } from 'redux-persist'
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
+import { persistStore } from 'redux-persist';
+import rootReducer from './reducers';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 
 export default () => {
   const store = createStore(
@@ -17,7 +16,7 @@ export default () => {
         logger
       )
     )
-  )
-  const persistor = persistStore(store)
-  return { store, persistor }
-}
+  );
+  const persistor = persistStore(store);
+  return { store, persistor };
+};
