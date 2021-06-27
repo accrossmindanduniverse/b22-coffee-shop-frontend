@@ -3,6 +3,7 @@ import { AiOutlineCheck } from 'react-icons/ai';
 import { FiSearch } from 'react-icons/fi';
 import { BsFillPersonFill, BsPeopleFill } from 'react-icons/bs';
 import { ImLocation2 } from 'react-icons/im';
+import Navbar from '../../navbar/navbar';
 import hazelnut from '../../assets/hazelnut.png';
 import pinky from '../../assets/pinky.png';
 import wings from '../../assets/wings.png';
@@ -22,6 +23,9 @@ import Footer from '../footer/footer';
 function Home() {
   return (
     <div className="parent">
+      <div>
+        <Navbar />
+      </div>
       <div className="banner w-screen">
         <div className="flex flex-col space-y-10 pt-7">
           <div className="w-full relative flex justify-end items-end pr-20">

@@ -28,7 +28,7 @@
     "import/prefer-default-export": "off",
     "no-console": 0,
     "import/no-named-as-default": [0],
-    "import/no-extraneous-dependencies": [{"devDependencies": true}],
+    "import/no-extraneous-dependencies": [0, {"devDependencies": true}],
     "import/no-named-as-default-member": [0],
     "eol-last": 0,
     "jsx-a11y/label-has-associated-control": [ 2, {

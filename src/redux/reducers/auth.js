@@ -1,5 +1,3 @@
-/* eslint-disable space-infix-ops */
-/* eslint-disable no-console */
 const initialState = {
   onAuth: false,
   token: null,
@@ -7,7 +5,7 @@ const initialState = {
   errMsg: ''
 };
 
-const auth = (state=initialState, action) => {
+const auth = (state = initialState, action) => {
   switch (action.type) {
     case 'AUTH_TOGGLE': {
       return {

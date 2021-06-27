@@ -3,6 +3,7 @@ import './productCust.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import spaghetti from '../../assets/spaghetti.png';
+import Navbar from '../../navbar/navbar';
 import FavoriteProduct from './favoriteProduct/favoriteProduct';
 import Footer from '../footer/footer';
 import { getItemsCategory, getItemCategories } from '../../redux/actions/items';
@@ -42,6 +43,9 @@ const ProductCust = (props) => {
 
   return (
     <div className="parent">
+      <div>
+        <Navbar />
+      </div>
       <div className="flex flex-row border-b-2 border-t-2">
 
         <div className="flex flex-col border-r-2 relative">

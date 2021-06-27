@@ -3,6 +3,8 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { BsPencil } from 'react-icons/bs';
 import Footer from '../footer/footer';
+import defaultAvatar from '../../assets/default-avatar.png';
+import Navbar from '../../navbar/navbar';
 import { authSignOut } from '../../redux/actions/auth';
 import './profile.css';
 import updateProfile from '../../redux/actions/user';
@@ -47,13 +49,16 @@ const Profile = (props) => {
         onClick: false
       });
     }).catch((err) => {
-      // eslint-disable-next-line no-console
       console.log(err);
     });
   };
 
+  console.log(props);
   return (
     <div>
+      <div>
+        <Navbar />
+      </div>
       <div className="profile-banner">
         <div className="pl-36 pt-52 flex">
           <div className="user-profile-box flex justify-center">
@@ -66,28 +71,16 @@ const Profile = (props) => {
             <div className="flex-col flex items-center h-full justify-between">
               <div className="space-y-7">
                 <div className="flex flex-row justify-between">
-                  <div className="flex justify-center">
-                    <img className="h-32 w-32 rounded-full" src={defaultData.userData.picture} alt="" />
+                  <div className="flex items-center space-y-4 flex-col justify-center">
                     <input
+                      className="w-full"
                       type="file"
                       onChange={(e) => setContacts({
                         ...contacts,
                         picture: e.target.files[0]
                       })}
                     />
-                  </div>
-                  <div>
-                    <button type="button" className="text-one-bg relative top-1 h-6 w-6 rounded-full text-center flex items-center justify-center">
-                      <BsPencil
-                        className="text-white"
-                        onClick={() => {
-                          setModal({
-                            ...modal,
-                            onClick: true
-                          });
-                        }}
-                      />
-                    </button>
+                    <img className="h-32 w-32 rounded-full" src={modal.picture ? defaultAvatar : defaultData.userData.picture} alt="" />
                   </div>
                 </div>
                 <div className="flex-col leading-9 text-center">
@@ -143,6 +136,7 @@ const Profile = (props) => {
                           </p>
                           <div className="bottom-border">
                             <input
+                              className="w-full"
                               value={contacts.username}
                               type="text"
                               placeholder=""
@@ -162,6 +156,7 @@ const Profile = (props) => {
                           Delivery Address
                           <div className="bottom-border-2nd">
                             <input
+                              className="w-full"
                               value={contacts.user_address}
                               type="text"
                               placeholder=""
@@ -184,6 +179,7 @@ const Profile = (props) => {
                         </p>
                         <div className="bottom-border">
                           <input
+                            className="w-full"
                             value={contacts.phone_number}
                             type="text"
                             placeholder=""
@@ -246,6 +242,7 @@ const Profile = (props) => {
                             </p>
                             <div className="bottom-border">
                               <input
+                                className="w-full"
                                 value={contacts.name}
                                 type="text"
                                 placeholder=""
@@ -264,6 +261,7 @@ const Profile = (props) => {
                             </p>
                             <div className="bottom-border-2nd">
                               <input
+                                className="w-full"
                                 value={contacts.first_name}
                                 type="text"
                                 placeholder=""
@@ -282,12 +280,32 @@ const Profile = (props) => {
                             </p>
                             <div className="bottom-border-2nd">
                               <input
+                                className="w-full"
                                 value={contacts.last_name}
                                 type="text"
                                 placeholder=""
                                 onChange={(e) => setContacts({
                                   ...contacts,
                                   last_name: e.target.value
+                                })}
+                              />
+                            </div>
+                          </label>
+                        </div>
+                        <div className="flex-1">
+                          <label htmlFor>
+                            <p className="text-gray-400">
+                              Password:
+                            </p>
+                            <div className="bottom-border-2nd">
+                              <input
+                                className="w-full"
+                                value={contacts.password}
+                                type="password"
+                                placeholder=""
+                                onChange={(e) => setContacts({
+                                  ...contacts,
+                                  password: e.target.value
                                 })}
                               />
                             </div>

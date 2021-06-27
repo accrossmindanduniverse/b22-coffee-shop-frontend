@@ -45,6 +45,12 @@ const items = (state = initialState, action) => {
         allTransactions: action.payload.items
       };
     }
+    case 'DELETE_TRANSACTION': {
+      return {
+        ...state,
+        data: action.payload
+      };
+    }
     default: {
       return {
         ...state

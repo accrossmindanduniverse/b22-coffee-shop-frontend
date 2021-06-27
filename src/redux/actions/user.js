@@ -8,6 +8,7 @@ const updateProfile = (token, id, userData) => async (dispatch) => {
   formData.append('last_name', userData.last_name);
   formData.append('name', userData.name);
   formData.append('phone_number', userData.phone_number);
+  formData.append('user_address', userData.user_address);
   formData.append('username', userData.username);
   formData.append('password', userData.password);
   if (userData.picture > sizeLimit) {

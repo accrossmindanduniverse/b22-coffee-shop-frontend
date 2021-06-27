@@ -71,6 +71,18 @@ export const getAllTransactions = (token, id) => async (dispatch) => {
   }
 };
 
+export const deleteTransaction = (token, id) => async (dispatch) => {
+  const { data } = await http(token).delete(`http://localhost:3001/private/${id}`);
+  try {
+    dispatch({
+      type: 'DELETE_TRANSACTION',
+      payload: data.data
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getDetailItem = (id) => async (dispatch) => {
   try {
     const { data } = await http().get(`http://localhost:3001/items/${id}`);

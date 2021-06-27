@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './cart.css';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import Navbar from '../../navbar/navbar';
 import Footer from '../footer/footer';
 import Transaction from './transaction';
 
@@ -28,6 +29,9 @@ const Cart = (props) => {
 
   return (
     <div className="cart-banner w-screen h-screen">
+      <div>
+        <Navbar />
+      </div>
       <div className="flex flex-col py-14 h-screen space-y-12">
         <div className="w-auto flex px-48">
           <p className="font-black text-4xl text-white">Checkout your item now!</p>

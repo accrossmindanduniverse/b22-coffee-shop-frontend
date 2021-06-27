@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './productDetail.css';
 import { connect } from 'react-redux';
+import Navbar from '../../../navbar/navbar';
 import Footer from '../../footer/footer';
 import { getDetailItem, getItemsAndVariants, getDetailVariant } from '../../../redux/actions/items';
 
@@ -62,6 +63,8 @@ function ProductDetail(props) {
 
   return (
     <div className="parent">
+      <div />
+      <Navbar />
       <div className="">
         {
     newData.map((newMap) => (

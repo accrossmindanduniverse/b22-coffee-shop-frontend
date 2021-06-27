@@ -1,7 +1,7 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import './signin.css';
+import { PropTypes } from 'prop-types';
+import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { FcGoogle } from 'react-icons/fc';
 import eating from '../../assets/eating.png';
@@ -10,6 +10,7 @@ import Footer from '../footer/footer';
 
 const SignIn = (props) => {
   const { errMsg } = props.auth;
+  const history = useHistory();
   const [signIn, setSignIn] = useState({
     username: '',
     password: ''
@@ -23,16 +24,9 @@ const SignIn = (props) => {
     const { token } = props.auth;
     if (token !== null) {
       props.toggleAuth();
-      props.history.push('/');
+      history.push('/');
     }
   });
-
-  // useEffect(() => {
-  //   if (err) {
-  //     return errMsg;
-  //   }
-  //   return errMsg;
-  // }, [errMsg]);
 
   return (
     <div>
@@ -50,7 +44,7 @@ const SignIn = (props) => {
             <div className="signup-btn rounded-full ">
               <button
                 type="button"
-                onClick={() => props.history.push('/signup')}
+                onClick={() => history.push('/signup')}
                 className="w-52 h-10 text-center primary-text font-bold text-lg"
               >
                 Sign Up
@@ -83,28 +77,34 @@ const SignIn = (props) => {
               className="h-full w-full space-y-24"
             >
               <div className="flex flex-col space-y-10">
-                <label className="font-bold text-xl">Email Address :</label>
-                <input
-                  className="h-16 p-5 rounded-lg"
-                  type="text"
-                  placeholder="Email"
-                  onChange={(e) => setSignIn({
-                    ...signIn,
-                    username: e.target.value
-                  })}
-                />
+                <label htmlFor className="font-bold text-xl">
+                  <p>
+                    Email Address :
+                  </p>
+                  <input
+                    className="h-16 p-5 rounded-lg w-full"
+                    type="text"
+                    placeholder="Email"
+                    onChange={(e) => setSignIn({
+                      ...signIn,
+                      username: e.target.value
+                    })}
+                  />
+                </label>
               </div>
               <div className="flex flex-col space-y-10">
-                <label className="font-bold text-xl">Password :</label>
-                <input
-                  className="h-16 p-5 rounded-lg"
-                  type="password"
-                  placeholder="Password"
-                  onChange={(e) => setSignIn({
-                    ...signIn,
-                    password: e.target.value
-                  })}
-                />
+                <label htmlFor className="font-bold text-xl">
+                  <p>Password :</p>
+                  <input
+                    className="h-16 p-5 rounded-lg w-full"
+                    type="password"
+                    placeholder="Password"
+                    onChange={(e) => setSignIn({
+                      ...signIn,
+                      password: e.target.value
+                    })}
+                  />
+                </label>
               </div>
               <div className="space-y-10">
                 <button type="button" className="w-full bg-white h-16 rounded-lg" onClick={handleSignIn}>Sign In</button>
@@ -121,6 +121,18 @@ const SignIn = (props) => {
       <Footer />
     </div>
   );
+};
+
+SignIn.defaultProps = {
+  authSignIn: () => {},
+  toggleAuth: () => {},
+  auth: []
+};
+
+SignIn.propTypes = {
+  authSignIn: PropTypes.func,
+  toggleAuth: PropTypes.func,
+  auth: PropTypes.node
 };
 
 const mapStateToProps = (state) => ({
