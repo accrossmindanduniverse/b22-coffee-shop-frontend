@@ -1,5 +1,4 @@
 .parent {
-  height: 100vh;
   width: 100vw;
   background: #ffff;
 }
@@ -79,15 +78,15 @@
 
 .active {
   color: #6A4029;
-  border-bottom: 2px solid #6A4029;
+  border-bottom: 4px solid #6A4029;
 }
 
-/* .category:hover {
+.category:hover {
   color: #6A4029;
-} */
-
-.category:active {
 }
+
+/* .category:active {
+} */
 
 .apply-btn {
   height: 100%;

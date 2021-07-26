@@ -1,5 +1,6 @@
 const initialState = {
-  user: {}
+  user: {},
+  signed: []
 };
 
 const user = (state = initialState, action) => {
@@ -8,7 +9,20 @@ const user = (state = initialState, action) => {
       console.log(action.payload);
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
+        errMsg: ''
+      };
+    }
+    case 'UPDATE_PROFILE_FAILED': {
+      return {
+        ...state,
+        errMsg: action.err
+      };
+    }
+    case 'GET_USER_SINGED': {
+      return {
+        ...state,
+        signed: action.payload
       };
     }
     default: {

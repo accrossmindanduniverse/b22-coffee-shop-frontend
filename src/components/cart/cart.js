@@ -103,11 +103,11 @@ const Cart = (props) => {
 };
 
 Cart.defaultProps = {
-  cart: []
+  cart: [],
 };
 
 Cart.propTypes = {
-  cart: PropTypes.node
+  cart: PropTypes.node,
 };
 
 const mapStateToProps = (state) => ({

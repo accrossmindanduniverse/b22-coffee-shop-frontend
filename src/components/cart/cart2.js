@@ -9,8 +9,8 @@ function Cart2() {
       <div>
         <Navbar />
       </div>
-      <div className="bg-gray-400 h-screen font-sansa text-7xl font-bold text-white flex justify-center items-center">
-        <p>Oops you haven&apos;t chosen anything, yet :)</p>
+      <div className="bg-gray-400 h-screen flex justify-center items-center">
+        <p className="no-items font-black font-sansa text-7xl text-white">Oops you haven&apos;t chosen anything, yet :)</p>
       </div>
       <Footer />
     </div>

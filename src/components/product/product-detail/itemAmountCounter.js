@@ -1,13 +1,18 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+// import { useHistory } from 'react-router';
 import { addItems } from '../../../redux/actions/cart';
 
 const ItemAmountCounter = (props) => {
+  // const history = useHistory();
   const amountData = props.items.variantDetail[0].quantity;
   const newData = props.checkoutData;
   const [amount, setAmount] = useState(1);
   const [checkout, setCheckout] = useState();
+  // const [addressModal, setAddressModal] = useState({
+  //   clicked: false
+  // });
 
   const onClickIncrease = () => {
     if (amount !== amountData) setAmount(amount + 1);
@@ -17,6 +22,13 @@ const ItemAmountCounter = (props) => {
   const onClickDecrease = () => {
     if (amountData >= 0) setAmount(amount - 1);
   };
+
+  // const handleCheckAddress = (visible) => {
+  //   setAddressModal({
+  //     ...addressModal,
+  //     clicked: visible
+  //   });
+  // };
 
   const handleClickCheckout = (data1st, data2nd) => {
     props.addItems(data1st, data2nd);
@@ -30,7 +42,6 @@ const ItemAmountCounter = (props) => {
 
   return (
     <div>
-
       <div className="flex flex-row relative justify-center items-center space-x-10 bottom-20 px-96">
 
         <div className="w-screen justify-between flex flex-row px-44 items-center bg-gray-50 h-44 rounded-2xl shadow-lg">

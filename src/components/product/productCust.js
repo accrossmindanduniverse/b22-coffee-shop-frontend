@@ -1,17 +1,26 @@
+/* eslint-disable no-plusplus */
 import React, { useState, useEffect } from 'react';
 import './productCust.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+// import qs from 'query-string';
 import spaghetti from '../../assets/spaghetti.png';
 import Navbar from '../../navbar/navbar';
 import FavoriteProduct from './favoriteProduct/favoriteProduct';
 import Footer from '../footer/footer';
-import { getItemsCategory, getItemCategories } from '../../redux/actions/items';
+import { getItemsCategory, getItemCategories, searchItem } from '../../redux/actions/items';
+import Search from './Search';
 
 const ProductCust = (props) => {
   const category = props.items.data;
+  // const urlParams = qs.parse(props.location.search);
+  const { pageInfo } = props.items.search.items ? props.items.search : props.items;
   const [tab, setTab] = useState();
+  const [arrowPage, setArrowPage] = useState(1);
   const [categoryNames, setCategoryNames] = useState([]);
+  const [newPage, setNewPage] = useState(1);
+  const [page, setPage] = useState([]);
 
   const mapAllCategoryName = (data) => {
     const categoryName = [];
@@ -26,6 +35,38 @@ const ProductCust = (props) => {
     props.getItemCategories(tabComp);
   };
 
+  const handlePageClick = (data) => {
+    setNewPage(data);
+  };
+
+  const handleArrowPageIncrease = () => {
+    console.log('postponed due to dunno what i have to do');
+  };
+
+  console.log(pageInfo.nextPage, 'arrow page');
+
+  const handleArrowPageDecrease = () => {
+    if (pageInfo.prevPage !== null) {
+      setArrowPage(arrowPage - 1);
+    }
+  };
+
+  useEffect(() => {
+    if (props.items.search.items === undefined) {
+      handlePageClick((res) => {
+        props.getItemCategories(tab, res);
+      });
+    }
+  }, [tab, newPage]);
+
+  useEffect(() => {
+    const arrPage = [];
+    for (let i = 1; i <= pageInfo.totalPage; i++) {
+      arrPage.push(i);
+    }
+    setPage(arrPage);
+  }, [props.items]);
+
   useEffect(() => {
     props.getItemsCategory(category);
   }, []);
@@ -35,11 +76,20 @@ const ProductCust = (props) => {
   }, [category]);
 
   useEffect(() => {
-    if (categoryNames[0]) {
-      setTab(categoryNames[0]);
-      props.getItemCategories(categoryNames[0]);
-    }
+    setTab(categoryNames[0]);
+    props.getItemCategories(categoryNames[0]);
   }, [categoryNames[0]]);
+
+  useEffect(() => {
+    // if (!urlParams.search) {
+    //   console.log(true);
+    props.getItemCategories(tab, '1');
+    // } else {
+    //   props.searchItem(urlParams.search);
+    //   console.log(false);
+    // }
+    // console.log(urlParams.search, 'search useEffect');
+  }, [tab]);
 
   return (
     <div className="parent">
@@ -95,18 +145,49 @@ const ProductCust = (props) => {
           </div>
 
         </div>
-        <div className="flex flex-col">
-
+        <div className="flex flex-col h-full">
+          <Search newPageInfo={newPage} />
+          {props.items.search.length === 0 && (
           <div className="p-10 flex justify-center">
             {
               categoryNames.map((name) => (
-                <nav className={`nav-product space-x-32 px-14 ${name === tab ? 'active' : 'text-gray-300'}`}>
-                  <button type="button" className="category font-bold text-xl cursor-pointer" onClick={() => handleTabClick(name)}>{name}</button>
+                <nav className={`space-x-32 px-14 ${name === tab ? 'active' : 'text-gray-300'}`}>
+                  <button type="button" className="category focus:outline-none font-bold text-xl cursor-pointer" onClick={() => handleTabClick(name)}>{name}</button>
                 </nav>
               ))
             }
           </div>
-          <FavoriteProduct data={props.items.dataByCategory} />
+          )}
+          <FavoriteProduct newPageInfo={newPage} className="mb-20" tab={tab} data={props.items.newDataByCategory.items ? props.items.newDataByCategory.items : props.items.dataByCategory} />
+          <div className="flex justify-center mt-20">
+            <div className="flex flex-row space-x-6 top-32">
+              <div className="w-14 h-14 flex justify-center items-center rounded-md bg-gray-300">
+                <BsChevronLeft onClick={handleArrowPageDecrease} className="font-bold text-xl" />
+              </div>
+              {page.map((e) => (
+                <div key={String(e)} className="w-14 h-14 flex justify-center items-center rounded-md bg-gray-300">
+                  {e === newPage && console.log('ok')}
+                  <button onClick={() => handlePageClick(e)} className="flex justify-center items-center w-full h-full focus:outline-none" type="button">
+                    <p className={`${e === newPage ? 'active' : 'text-gray-900'}`}>{e}</p>
+                  </button>
+                </div>
+              ))}
+              <div className="w-24 h-14 flex justify-center items-center rounded-md bg-gray-300">
+                <p>
+                  ...
+                  {' '}
+                  {' '}
+                  {' '}
+                  {pageInfo.totalData}
+                </p>
+              </div>
+              <div className="w-14 h-14 flex justify-center items-center rounded-md bg-gray-300">
+                <button type="button" onClick={handleArrowPageIncrease} className="flex justify-center items-center">
+                  <BsChevronRight className="font-bold text-xl" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <Footer />
@@ -116,14 +197,18 @@ const ProductCust = (props) => {
 
 ProductCust.defaultProps = ({
   getItemCategories: () => {},
+  // searchItem: () => {},
   getItemsCategory: () => {},
-  items: []
+  items: [],
+  // location: []
 });
 
 ProductCust.propTypes = {
   getItemCategories: PropTypes.func,
+  // searchItem: PropTypes.func,
   getItemsCategory: PropTypes.func,
-  items: PropTypes.node
+  items: PropTypes.node,
+  // location: PropTypes.node
 };
 
 ProductCust.propTypes = {
@@ -134,7 +219,7 @@ const mapStateToProps = (state) => ({
   items: state.items
 });
 
-const mapDispatchToProps = { getItemsCategory, getItemCategories };
+const mapDispatchToProps = { getItemsCategory, getItemCategories, searchItem };
 
 export default connect(
   mapStateToProps,

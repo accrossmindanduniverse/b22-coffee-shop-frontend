@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unneeded-ternary */
+import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { BsPencil } from 'react-icons/bs';
@@ -7,29 +8,35 @@ import defaultAvatar from '../../assets/default-avatar.png';
 import Navbar from '../../navbar/navbar';
 import { authSignOut } from '../../redux/actions/auth';
 import './profile.css';
-import updateProfile from '../../redux/actions/user';
+import { getUserSigned, updateProfile } from '../../redux/actions/user';
+
+const { REACT_APP_BACKEND_URL: URL } = process.env;
 
 const Profile = (props) => {
   const defaultData = props.auth.token;
+  const signed = props.user.signed[0];
 
-  const [contacts, setContacts] = useState({
+  const [contacts, setContacts] = useState(props.user.signed.length > 0 && {
     picture: null,
-    name: '',
-    user_address: '',
-    username: '',
-    password: '',
-    phone_number: '',
-    first_name: '',
-    last_name: ''
+    name: signed.name,
+    user_address: signed.user_address,
+    username: signed.username,
+    phone_number: signed.phone_number,
+    first_name: signed.first_name,
+    last_name: signed.last_name
   });
 
   const onClickSignOut = () => {
     props.authSignOut();
   };
 
+  console.log(signed);
+
   const [modal, setModal] = useState({
     onClick: false
   });
+
+  console.log('asd');
 
   const handleUpdateProfile = () => {
     props.updateProfile(defaultData.refreshToken, defaultData.userData.id, contacts).then(() => {
@@ -39,7 +46,6 @@ const Profile = (props) => {
         name: '',
         user_address: '',
         username: '',
-        password: '',
         phone_number: '',
         first_name: '',
         last_name: ''
@@ -48,13 +54,19 @@ const Profile = (props) => {
         ...modal,
         onClick: false
       });
+      props.getUserSigned(defaultData.refreshToken);
     }).catch((err) => {
       console.log(err);
     });
   };
 
+  useEffect(() => {
+    props.getUserSigned(defaultData.refreshToken);
+  }, [defaultData.userData]);
+
   console.log(props);
-  return (
+
+  return signed !== undefined && (
     <div>
       <div>
         <Navbar />
@@ -80,15 +92,15 @@ const Profile = (props) => {
                         picture: e.target.files[0]
                       })}
                     />
-                    <img className="h-32 w-32 rounded-full" src={modal.picture ? defaultAvatar : defaultData.userData.picture} alt="" />
+                    <img className="h-32 w-32 rounded-full" src={`${URL}${signed.picture}` ? `${URL}${signed.picture}` : defaultAvatar} alt="" />
                   </div>
                 </div>
                 <div className="flex-col leading-9 text-center">
                   <div>
-                    <p className="font-bold text-2xl">{defaultData.userData.name}</p>
+                    <p className="font-bold text-2xl">{signed.name}</p>
                   </div>
                   <div>
-                    <p>{defaultData.userData.username}</p>
+                    <p>{signed.username}</p>
                   </div>
                 </div>
               </div>
@@ -110,14 +122,14 @@ const Profile = (props) => {
                     <button type="button" className="text-one-bg relative top-1 h-6 w-6 rounded-full text-center flex items-center justify-center">
                       <BsPencil
                         className="text-white"
-                        onClick={() => {
-                          setContacts({
-                            ...contacts,
-                            username: defaultData.userData.username,
-                            phone_number: defaultData.userData.phone_number,
-                            user_address: defaultData.userData.user_address
-                          });
-                        }}
+                        // onClick={() => {
+                        //   setContacts({
+                        //     ...contacts,
+                        //     username: signed.username,
+                        //     phone_number: signed.phone_number,
+                        //     user_address: signed.user_address
+                        //   });
+                        // }}
                       />
                     </button>
                   </div>
@@ -212,18 +224,18 @@ const Profile = (props) => {
                       <button type="button" className="text-one-bg relative top-1 h-6 w-6 rounded-full text-center flex items-center justify-center">
                         <BsPencil
                           className="text-white"
-                          onClick={() => {
-                            setModal({
-                              ...modal,
-                              onClick: true
-                            });
-                            setContacts({
-                              ...contacts,
-                              name: defaultData.userData.name,
-                              first_name: defaultData.userData.first_name,
-                              last_name: defaultData.userData.last_name
-                            });
-                          }}
+                          // onClick={() => {
+                          //   setModal({
+                          //     ...modal,
+                          //     onClick: true
+                          //   });
+                          //   setContacts({
+                          //     ...contacts,
+                          //     name: signed.name,
+                          //     first_name: signed.first_name,
+                          //     last_name: signed.last_name
+                          //   });
+                          // }}
                         />
                       </button>
                     </div>
@@ -243,12 +255,13 @@ const Profile = (props) => {
                             <div className="bottom-border">
                               <input
                                 className="w-full"
+                                // defaultValue={contacts.name}
                                 value={contacts.name}
                                 type="text"
                                 placeholder=""
-                                onChange={(e) => setContacts({
+                                onChange={() => setContacts({
                                   ...contacts,
-                                  name: e.target.value
+                                  name: signed.name
                                 })}
                               />
                             </div>
@@ -287,25 +300,6 @@ const Profile = (props) => {
                                 onChange={(e) => setContacts({
                                   ...contacts,
                                   last_name: e.target.value
-                                })}
-                              />
-                            </div>
-                          </label>
-                        </div>
-                        <div className="flex-1">
-                          <label htmlFor>
-                            <p className="text-gray-400">
-                              Password:
-                            </p>
-                            <div className="bottom-border-2nd">
-                              <input
-                                className="w-full"
-                                value={contacts.password}
-                                type="password"
-                                placeholder=""
-                                onChange={(e) => setContacts({
-                                  ...contacts,
-                                  password: e.target.value
                                 })}
                               />
                             </div>
@@ -400,12 +394,16 @@ const Profile = (props) => {
 Profile.defaultProps = ({
   updateProfile: () => {},
   authSignOut: () => {},
+  getUserSigned: () => {},
+  user: [],
   auth: []
 });
 
 Profile.propTypes = {
   authSignOut: PropTypes.func,
   updateProfile: PropTypes.func,
+  getUserSigned: PropTypes.func,
+  user: PropTypes.node,
   auth: PropTypes.node
 };
 
@@ -414,7 +412,7 @@ const mapStateToProps = (state) => ({
   user: state.user
 });
 
-const mapDispatchToProps = { updateProfile, authSignOut };
+const mapDispatchToProps = { updateProfile, authSignOut, getUserSigned };
 
 export default connect(
   mapStateToProps,

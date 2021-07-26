@@ -1,5 +1,6 @@
 const initialState = {
   onAuth: false,
+  signUp: [{}],
   token: null,
   data: {},
   errMsg: ''
@@ -31,18 +32,31 @@ const auth = (state = initialState, action) => {
       console.log(action.err);
       return {
         ...state,
-        errMsg: action.err
+        errMsg: action.err,
       };
     }
     case 'AUTH_SIGNUP': {
       return {
-        ...state
+        ...state,
+        signUp: action.payload,
+        onAuth: !state.onAuth,
       };
     }
     case 'AUTH_SIGNUP_REJECTED': {
       return {
         ...state,
-        errMsg: action.err
+        errMsg: action.err,
+        signUp: [{}]
+      };
+    }
+    case 'ERROR_DEFAULT': {
+      return {
+        ...state,
+        errMsg: '',
+        onAuth: false,
+        token: null,
+        data: {},
+        signUp: [{}]
       };
     }
     default: {

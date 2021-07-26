@@ -2,6 +2,7 @@ import { AiOutlineRight } from 'react-icons/ai';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './productDetail.css';
+// import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Navbar from '../../../navbar/navbar';
 import Footer from '../../footer/footer';
@@ -11,12 +12,17 @@ import ItemAmountCounter from './itemAmountCounter';
 import { addItems } from '../../../redux/actions/cart';
 
 function ProductDetail(props) {
+  // const history = useHistory();
   const { itemsAndVariants } = props.items;
+  const signed = props.user.signed[0];
   const { getId } = props.location.state;
   const { variantDetail } = props.items;
   const [tab, setTab] = useState();
   const [variants, setVariants] = useState([]);
   const [newData, setNewdata] = useState([]);
+  const [addressModal, setAddressModal] = useState({
+    clicked: false
+  });
 
   const mapAllVariantName = (key) => {
     const variantName = [];
@@ -35,6 +41,13 @@ function ProductDetail(props) {
       return row;
     });
     setNewdata(allItemsArr);
+  };
+
+  const handleCheckAddress = (visible) => {
+    setAddressModal({
+      ...addressModal,
+      clicked: visible
+    });
   };
 
   const handleVariantTabClick = (tabComp) => {
@@ -63,6 +76,30 @@ function ProductDetail(props) {
 
   return (
     <div className="parent">
+      {/* <div onChange={() => setAd
+      dressModal(true)} className="modal w-screen h-screen flex justify-center items-center">
+        <div className="flex flex-col bg-white rounded-xl h-60 btn ensure-btn p-5 space-y-20">
+          <p className="font-bold text-
+          2xl text-center">It seems you&apos;re not filled your address </p>
+          <div className="flex-1 font-black text-2xl flex flex-row space-x-40">
+            <button
+              onClick={() => handleCheckAddress(false)}
+              type="button"
+              className="h-14 w-32 cancel-btn rounded-xl"
+            >
+              Cancel
+
+            </button>
+            <button
+              onClick={() => history.push('/profile')}
+              type="button"
+              className="h-14 w-32 delete-btn rounded-xl"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div> */}
       <div />
       <Navbar />
       <div className="">
@@ -90,14 +127,22 @@ function ProductDetail(props) {
                 <p className="font-black text-4xl" />
                 <p className="text-2xl">
                   IDR
-                  {(newMap.final_price).toLocaleString('id')}
+                  {' '}
+                  {Number(newMap.final_price).toLocaleString('ind')}
                 </p>
               </div>
+              {signed !== undefined && (
               <div className="flex flex-col w-96 text-center space-y-7">
-                <button type="button" className="h-14 rounded-2xl primary-brown-background text-white font-bold text-xl">Add to Cart</button>
+                {signed.user_address === undefined ? (
+                  <button onClick={() => handleCheckAddress(true)} type="button" className="h-14 rounded-2xl primary-brown-background text-white font-bold text-xl">Add to cart</button>
+                ) : (
+                  <button type="button" className="h-14 rounded-2xl primary-brown-background text-white font-bold text-xl">Add to Cart</button>
+
+                )}
                 {/*  onClick={handleClickToCart} */}
                 <button type="button" className="h-14 rounded-2xl primary-yellow-background primary-brown font-bold text-xl">Ask Staff</button>
               </div>
+              )}
             </div>
           </div>
         </div>
@@ -159,6 +204,7 @@ ProductDetail.defaultProps = ({
   getDetailVariant: () => {},
   getItemsAndVariants: () => {},
   items: [],
+  user: [],
   location: []
 });
 
@@ -166,11 +212,13 @@ ProductDetail.propTypes = {
   getDetailVariant: PropTypes.func,
   getItemsAndVariants: PropTypes.func,
   items: PropTypes.node,
+  user: PropTypes.node,
   location: PropTypes.node
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  user: state.user,
   items: state.items,
 });
 

@@ -43,3 +43,11 @@ export const authSignUp = (username, password) => async (dispatch) => {
     });
   }
 };
+
+export const errorDefault = () => (dispatch) => {
+  setTimeout(() => {
+    dispatch({
+      type: 'ERROR_DEFAULT'
+    });
+  }, 3000);
+};

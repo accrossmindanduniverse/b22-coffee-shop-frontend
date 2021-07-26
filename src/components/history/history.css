@@ -2,11 +2,30 @@ body {
   font-family: 'Rubik', sans-serif;
 }
 
+.modal {
+  background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+}
 
 .history-banner {
   background-image: url('../../assets/tyler-nix-jE-27l7V3NU-unsplash\ 2.png');
   background-position: center;
   background-size: cover;
+}
+
+.delete-btn {
+  background-color: #6A4029;
+  color: white;
+  font-weight: bolder;
+}
+
+.cancel-btn {
+  border: 2px solid #6A4029;
+  color: #6A4029;
+  font-weight: bolder;
 }
 
 .checkout-text {
@@ -48,6 +67,10 @@ body {
 
 .custom-checkbox input:checked ~ .item:after {
   display: block;
+}
+
+.ensure-btn {
+  width: 450px;
 }
 
 .custom-checkbox .item:after {

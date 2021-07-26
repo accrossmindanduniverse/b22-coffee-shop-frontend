@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { FcGoogle } from 'react-icons/fc';
 import eating from '../../assets/eating.png';
-import { authSignIn, toggleAuth } from '../../redux/actions/auth';
+import { authSignIn, toggleAuth, errorDefault } from '../../redux/actions/auth';
 import Footer from '../footer/footer';
 
 const SignIn = (props) => {
@@ -27,6 +27,14 @@ const SignIn = (props) => {
       history.push('/');
     }
   });
+
+  useEffect(() => {
+    if (errMsg !== '') {
+      props.errorDefault();
+    }
+  }, [errMsg]);
+
+  console.log(errMsg);
 
   return (
     <div>
@@ -126,12 +134,14 @@ const SignIn = (props) => {
 SignIn.defaultProps = {
   authSignIn: () => {},
   toggleAuth: () => {},
+  errorDefault: () => {},
   auth: []
 };
 
 SignIn.propTypes = {
   authSignIn: PropTypes.func,
   toggleAuth: PropTypes.func,
+  errorDefault: PropTypes.func,
   auth: PropTypes.node
 };
 
@@ -139,7 +149,7 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-const mapDispatchToProps = { toggleAuth, authSignIn };
+const mapDispatchToProps = { toggleAuth, authSignIn, errorDefault };
 
 export default connect(
   mapStateToProps,

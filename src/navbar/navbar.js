@@ -35,7 +35,7 @@ const Navbar = (props) => {
                   props.auth.token !== null ? (
                     <div className="flex flex-row space-x-8 items-center">
                       <Link to="/profile" className="bg-gray-700 w-7 h-7 rounded-full">
-                        <img src={props.auth.token.userData.picturealt} alt="" />
+                        {/* <img src={props.auth.token.userData.picturealt} alt="" /> */}
                       </Link>
                       <button type="button" onClick={handleSignOut} className="w-32 h-10 rounded-full flex justify-center items-center primary-btn">Sign Out</button>
                     </div>

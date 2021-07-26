@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import { PersistGate } from 'redux-persist/integration/react';
-
 import { Provider } from 'react-redux';
-import App from './App';
 import reduxConfig from './redux/store';
+
+import App from './App';
+import './index.css';
 
 const redux = reduxConfig();
 

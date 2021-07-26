@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+// import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { finalTransaction } from '../../redux/actions/cart';
 
 const Transaction = (props) => {
+  // const history = useHistory();
   const { token } = props.auth;
+  const signed = props.user;
   const [getItems, setGetItems] = useState([]);
   const [getId, setGetId] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState([{
@@ -45,6 +48,8 @@ const Transaction = (props) => {
     setGetItems(itemsArr);
   };
 
+  console.log(signed);
+
   const mapAllItemsId = (id) => {
     const idArr = [];
     id.map((e) => idArr.push(e.data2nd[0].id));
@@ -53,11 +58,11 @@ const Transaction = (props) => {
 
   useEffect(() => {
     mapAllItemsDataForTransaction(props.cart.items);
-  }, []);
+  }, [signed]);
 
   useEffect(() => {
     mapAllItemsId(props.cart.items);
-  }, []);
+  }, [props.cart.items]);
 
   return (
     <div>
@@ -160,7 +165,9 @@ const Transaction = (props) => {
         </div>
         <div>
           <div>
-            <button type="button" onClick={handleTransaction} className="confirm-pay-btn font-bold text-white text-2xl w-full h-full">Confirm And Pay</button>
+            <button type="button" onClick={handleTransaction} className="confirm-pay-btn  w-full h-full">
+              <p className="font-bold text-white text-2xl mt-7 mb-7">Confirm And Pay</p>
+            </button>
           </div>
         </div>
       </div>
@@ -172,6 +179,7 @@ Transaction.defaultProps = ({
   finalTransaction: () => {},
   items: [],
   total: [],
+  user: [],
   taxAndFees: [],
   auth: [],
   cart: []
@@ -182,6 +190,7 @@ Transaction.propTypes = {
   total: PropTypes.node,
   taxAndFees: PropTypes.node,
   items: PropTypes.node,
+  user: PropTypes.node,
   auth: PropTypes.node,
   cart: PropTypes.node
 };
@@ -189,6 +198,7 @@ Transaction.propTypes = {
 const mapStateToProps = (state) => ({
   items: state.items,
   cart: state.cart,
+  user: state.user,
   auth: state.auth,
 });
 

@@ -1,29 +1,43 @@
-/* eslint-disable no-console */
 import { http } from '../../helpers/http';
+
+const { REACT_APP_BACKEND_URL: URL } = process.env;
 
 export const getItemsCategory = () => async (dispatch) => {
   try {
-    const { data } = await http().get('http://localhost:3001/category');
+    const { data } = await http().get(`${URL}/category`);
     dispatch({
       type: 'GET_CATEGORY',
       payload: {
         items: data.data
       }
     });
+    console.log(data);
   } catch (err) {
     console.log(err);
   }
 };
 
-export const getItemCategories = (id) => async (dispatch) => {
+export const getItemCategories = (name, num) => async (dispatch) => {
   try {
-    const { data } = await http().get(`http://localhost:3001/category?search=${id}`);
-    dispatch({
-      type: 'GET_ITEM_CATEGORIES',
-      payload: {
-        items: data.data
-      }
-    });
+    if (!num) {
+      const { data } = await http().get(`${URL}/category?search=${name}`);
+      dispatch({
+        type: 'GET_ITEM_CATEGORIES',
+        payload: {
+          items: data.data,
+          pageInfo: data.pageInfo
+        }
+      });
+    } else {
+      const { data } = await http().get(`${URL}/category?search=${name}&page=${num}`);
+      dispatch({
+        type: 'GET_ITEMS_NEXT',
+        payload: {
+          items: data.data,
+          pageInfo: data.pageInfo
+        }
+      });
+    }
   } catch (err) {
     console.log(err);
   }
@@ -31,7 +45,7 @@ export const getItemCategories = (id) => async (dispatch) => {
 
 export const getItemsAndVariants = (id) => async (dispatch) => {
   try {
-    const { data } = await http().get(`http://localhost:3001/variant/${id}`);
+    const { data } = await http().get(`${URL}/variant/${id}`);
     dispatch({
       type: 'ITEMS_AND_VARIANTS',
       payload: {
@@ -45,7 +59,7 @@ export const getItemsAndVariants = (id) => async (dispatch) => {
 
 export const getDetailVariant = (id, key) => async (dispatch) => {
   try {
-    const { data } = await http().get(`http://localhost:3001/variant/detail/${id}?search=${key}`);
+    const { data } = await http().get(`${URL}/variant/detail/${id}?search=${key}`);
     dispatch({
       type: 'VARIANT_DETAIL',
       payload: {
@@ -72,7 +86,7 @@ export const getAllTransactions = (token, id) => async (dispatch) => {
 };
 
 export const deleteTransaction = (token, id) => async (dispatch) => {
-  const { data } = await http(token).delete(`http://localhost:3001/private/${id}`);
+  const { data } = await http(token).delete(`${URL}/private/${id}`);
   try {
     dispatch({
       type: 'DELETE_TRANSACTION',
@@ -85,11 +99,26 @@ export const deleteTransaction = (token, id) => async (dispatch) => {
 
 export const getDetailItem = (id) => async (dispatch) => {
   try {
-    const { data } = await http().get(`http://localhost:3001/items/${id}`);
+    const { data } = await http().get(`${URL}/items/${id}`);
     dispatch({
       type: 'GET_ITEM_BY_ID',
       payload: {
         items: data.data
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const searchItem = (search, sortBy, sort, page) => async (dispatch) => {
+  try {
+    const { data } = await http().get(`${URL}/items?search=${search}&sort[${sortBy}]=${sort}&page=${page}`);
+    dispatch({
+      type: 'SEARCH_ITEM',
+      payload: {
+        items: data.data,
+        pageInfo: data.pageInfo
       }
     });
   } catch (err) {

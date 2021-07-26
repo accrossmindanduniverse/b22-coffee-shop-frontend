@@ -1,10 +1,13 @@
 const initialState = {
   data: [],
   dataByCategory: [],
+  pageInfo: [],
+  newDataByCategory: [],
   allTransactions: [],
   variantDetail: [],
   itemsAndVariants: [],
-  dataById: []
+  dataById: [],
+  search: []
 };
 
 const items = (state = initialState, action) => {
@@ -18,7 +21,14 @@ const items = (state = initialState, action) => {
     case 'GET_ITEM_CATEGORIES': {
       return {
         ...state,
-        dataByCategory: action.payload.items
+        dataByCategory: action.payload.items,
+        pageInfo: action.payload.pageInfo
+      };
+    }
+    case 'GET_ITEMS_NEXT': {
+      return {
+        ...state,
+        newDataByCategory: action.payload
       };
     }
     case 'ITEMS_AND_VARIANTS': {
@@ -37,6 +47,12 @@ const items = (state = initialState, action) => {
       return {
         ...state,
         dataById: action.payload.items
+      };
+    }
+    case 'SEARCH_ITEM': {
+      return {
+        ...state,
+        search: action.payload
       };
     }
     case 'GET_ALL_TRANSACTIONS': {

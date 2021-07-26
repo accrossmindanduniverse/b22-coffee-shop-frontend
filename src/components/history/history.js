@@ -15,19 +15,65 @@ const History = (props) => {
     onClick: false,
   });
 
+  const [checkBox, setCheckBox] = useState({
+    onClick: false
+  });
+
+  const [deleteItem, setDeleteItem] = useState([]);
+
   const handleClickToProduct = () => {
     history.push('/product-cust');
   };
 
   const handleDeleteTransaction = (authToken, id) => {
-    props.deleteTransaction(authToken, id);
-    setModal({
-      ...modal,
-      onClick: false
+    props.deleteTransaction(authToken, id).then(() => {
+      setModal({
+        ...modal,
+        onClick: false
+      });
+      setDeleteItem([]);
+      props.getAllTransactions(token.refreshToken, token.userData.id);
+      setCheckBox({
+        ...checkBox,
+        onClick: false
+      });
     });
   };
 
-  console.log(props);
+  const showModal = (visible) => {
+    setModal({
+      ...modal,
+      onClick: visible
+    });
+  };
+
+  const handleCheckBox = (data) => {
+    setCheckBox({
+      ...checkBox,
+      onClick: data
+    });
+  };
+
+  console.log(checkBox);
+
+  const saveItemToDelete = (item) => {
+    setDeleteItem(item);
+    handleCheckBox(true);
+    if (checkBox.onClick) {
+      setCheckBox({
+        ...checkBox,
+        onClick: false
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (deleteItem.length === 0) {
+      props.getAllTransactions(token.refreshToken, token.userData.id);
+    }
+  }, [deleteItem]);
+
+  console.log(deleteItem, 'test123123');
 
   const getAllItemTransactions = () => {
     props.getAllTransactions(token.refreshToken, token.userData.id);
@@ -41,16 +87,36 @@ const History = (props) => {
     <div>
       <Navbar />
     </div>
+    {modal.onClick && (
+    <div onChange={() => setModal(true)} className="modal w-screen h-screen flex justify-center items-center">
+      <div className="flex flex-col bg-white rounded-xl h-60 btn ensure-btn p-5 space-y-20">
+        <p className="font-bold text-2xl text-center">Are you sure want to delete the selected items?</p>
+        <div className="flex-1 font-black text-2xl flex flex-row space-x-40">
+          <button
+            onClick={() => showModal(false)}
+            type="button"
+            className="h-14 w-32 cancel-btn rounded-xl"
+          >
+            Cancel
+
+          </button>
+          <button
+            onClick={() => handleDeleteTransaction(token.refreshToken, deleteItem)}
+            type="button"
+            className="h-14 w-32 delete-btn rounded-xl"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+    )}
     <div className="history-banner w-screen h-screen p-10">
       <div className="flex flex-col">
         <div className="flex flex-col items-center justify-center">
           <p className="font-black text-white text-4xl checkout-text">Let&apos;s see what you have bought!</p>
           <button
             type="button"
-            onClick={() => setModal({
-              ...modal,
-              onClick: true,
-            })}
             className="font-black text-white text-xl checkout-text"
           >
             Select item to delete
@@ -64,7 +130,14 @@ const History = (props) => {
             </div>
           ) : (
             <div className="flex justify-end">
-              <button onClick={() => handleDeleteTransaction(token.refreshToken, allTransactions[0].id)} type="button" className="font-black text-white text-xl checkout-text py-7 px-10">Delete Item</button>
+              <button
+                onClick={() => showModal(true)}
+                type="button"
+                className="font-black text-white text-xl checkout-text py-7 px-10"
+              >
+                Delete Item
+
+              </button>
             </div>
           )
         }
@@ -89,15 +162,15 @@ const History = (props) => {
                         <p>{item.payment_method}</p>
                       </div>
                       <div className="flex w-full justify-end px-12">
-                        <label value={allTransactions[0].id} htmlFor className="custom-checkbox">
+                        <label
+                          value={allTransactions[0].id}
+                          htmlFor
+                          checked={handleCheckBox}
+                          className="custom-checkbox"
+                        >
                           <input
                             type="checkbox"
-                            onChange={() => {
-                              setModal({
-                                ...modal,
-                                onClick: allTransactions[0].id,
-                              });
-                            }}
+                            onClick={() => saveItemToDelete(item.id)}
                           />
                           <span className="item" />
                         </label>

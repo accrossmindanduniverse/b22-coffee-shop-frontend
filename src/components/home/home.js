@@ -1,8 +1,10 @@
 import React from 'react';
 import { AiOutlineCheck } from 'react-icons/ai';
-import { FiSearch } from 'react-icons/fi';
+import { connect } from 'react-redux';
 import { BsFillPersonFill, BsPeopleFill } from 'react-icons/bs';
 import { ImLocation2 } from 'react-icons/im';
+import { useHistory } from 'react-router';
+import { searchItem } from '../../redux/actions/items';
 import Navbar from '../../navbar/navbar';
 import hazelnut from '../../assets/hazelnut.png';
 import pinky from '../../assets/pinky.png';
@@ -19,8 +21,11 @@ import spotify from '../../assets/spotify.png';
 import './home.css';
 import teamWork from '../../assets/team-work.png';
 import Footer from '../footer/footer';
+// import HomeSearch from './HomeSearch';
 
 function Home() {
+  const history = useHistory();
+
   return (
     <div className="parent">
       <div>
@@ -28,12 +33,6 @@ function Home() {
       </div>
       <div className="banner w-screen">
         <div className="flex flex-col space-y-10 pt-7">
-          <div className="w-full relative flex justify-end items-end pr-20">
-            <div className="pr-28 relative">
-              <FiSearch className="fas fa-search absolute left-3 top-3" />
-              <input className="bg-gray-100 pl-10 h-10 w-64 rounded-full" type="text" placeholder="Search" />
-            </div>
-          </div>
           <div className="flex-1 space-y-10 first-content relative left-44">
             <div>
               <p className="font-bold text-6xl text-white">Start Your Day with Coffee and Good Meals</p>
@@ -44,7 +43,7 @@ function Home() {
             </div>
 
             <div>
-              <button type="button" className="w-96 h-24 rounded-xl text-xl primary-btn primary-brown-text font-bold">Get Started</button>
+              <button onClick={() => history.push('/product-cust')} type="button" className="w-96 h-24 rounded-xl text-xl primary-btn primary-brown-text font-bold">Get Started</button>
             </div>
 
           </div>
@@ -408,4 +407,22 @@ function Home() {
   );
 }
 
-export default Home;
+Home.defaultProps = {
+  // searchItem: () => {},
+  items: [],
+  // location: []
+};
+
+// Home.propTypes = {
+//   // searchItem: PropTypes.func,
+//   // location: PropTypes.node,
+//   items: PropTypes.node
+// };
+
+const mapStateToProps = (state) => ({
+  items: state.items
+});
+
+const mapDispatchToProps = { searchItem };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

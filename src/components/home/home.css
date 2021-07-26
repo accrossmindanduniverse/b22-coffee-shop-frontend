@@ -11,6 +11,12 @@
   height: 900px;
 }
 
+.home-search-modal {
+  background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
 
 .slogan {
   width: 100vw;
