@@ -1,5 +1,7 @@
 import { http } from '../../helpers/http';
 
+const { REACT_APP_BACKEND_URL: URL } = process.env;
+
 export const toggleAuth = () => ({
   type: 'AUTH_TOGGLE'
 });
@@ -40,6 +42,24 @@ export const authSignUp = (username, password) => async (dispatch) => {
     dispatch({
       type: 'AUTH_SIGNUP_REJECTED',
       err: err.response.data.data
+    });
+  }
+};
+
+export const authRefreshToken = (token, setData) => async (dispatch) => {
+  const form = new URLSearchParams();
+  form.append('refreshToken', setData.refreshToken);
+  console.log(form, 'refresh token');
+  try {
+    const { data } = await http(token).post(`${URL}/auth/refresh-token`, form);
+    dispatch({
+      type: 'REFRESH_TOKEN',
+      payload: data.data
+    });
+  } catch (err) {
+    dispatch({
+      type: 'REFRESH_TOKEN_REJECTED',
+      error: err.response.data.data
     });
   }
 };

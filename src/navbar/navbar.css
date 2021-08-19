@@ -4,6 +4,23 @@
   font-weight: bold;
 }
 
+.modal-parent {
+  height: 700px;
+}
+
+.primary-btn {
+  box-shadow: 2px 2px 15px #FFBA33;
+  background-color: #FFBA33;
+}
+
 .primary-brown-text {
   color:rgb(106, 64, 41, 1);
+}
+
+.hamburger {
+  background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
 }

@@ -1,8 +1,8 @@
 const initialState = {
   onAuth: false,
   signUp: [{}],
+  refreshToken: null,
   token: null,
-  data: {},
   errMsg: ''
 };
 
@@ -17,16 +17,23 @@ const auth = (state = initialState, action) => {
     case 'AUTH_SIGNIN': {
       return {
         ...state,
-        data: action.payload.data,
         token: action.payload
       };
     }
-    case 'AUTH_SIGNOUT': {
+    case 'REFRESH_TOKEN': {
       return {
         ...state,
-        onAuth: false,
-        token: null
+        refreshToken: action.payload
       };
+    }
+    case 'REFRESH_TOKEN_REJECTED': {
+      return {
+        ...state,
+        errMsg: action.error,
+      };
+    }
+    case 'AUTH_SIGNOUT': {
+      return initialState;
     }
     case 'AUTH_SIGNIN_REJECTED': {
       console.log(action.err);
@@ -55,7 +62,6 @@ const auth = (state = initialState, action) => {
         errMsg: '',
         onAuth: false,
         token: null,
-        data: {},
         signUp: [{}]
       };
     }

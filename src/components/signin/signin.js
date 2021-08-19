@@ -37,19 +37,19 @@ const SignIn = (props) => {
   console.log(errMsg);
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <div className="flex flex-col md:flex-row bg-gray-100">
         <div className="flex-1">
-          <img className="w-screen h-screen" src={eating} alt="" />
+          <img className="w-0 md:w-screen h-0 object-cover md:h-screen" src={eating} alt="" />
         </div>
         <div className="flex-1 flex flex-col">
-          <div className="flex md:flex-row justify-between px-44 py-16">
+          <div className="flex flex-col space-y-10 md:space-y-0 items-center md:flex-row md:justify-between md:px-44 py-16">
             <div className="items-center flex">
               <p className="primary-text font-bold text-lg">
                 Coffee Shop
               </p>
             </div>
-            <div className="signup-btn rounded-full ">
+            <div className="signup-btn rounded-full flex justify-center items-center ml-14 mr-14 md:ml-0 md:mr-0">
               <button
                 type="button"
                 onClick={() => history.push('/signup')}
@@ -60,7 +60,7 @@ const SignIn = (props) => {
               </button>
             </div>
           </div>
-          <div className="flex-1 flex flex-col justify-center items-center px-44 space-y-10">
+          <div className="flex-1 flex flex-col mr-14 ml-14 md:mr-0 md:ml-0 justify-center items-center md:px-44 space-y-10">
             <div className="flex justify-center">
               <p className="text-3xl tracking-wider font-bold primary-text">Sign In</p>
             </div>
@@ -90,7 +90,7 @@ const SignIn = (props) => {
                     Email Address :
                   </p>
                   <input
-                    className="h-16 p-5 rounded-lg w-full"
+                    className="h-16 p-5 rounded-lg w-full outline-none"
                     type="text"
                     placeholder="Email"
                     onChange={(e) => setSignIn({
@@ -104,7 +104,7 @@ const SignIn = (props) => {
                 <label htmlFor className="font-bold text-xl">
                   <p>Password :</p>
                   <input
-                    className="h-16 p-5 rounded-lg w-full"
+                    className="h-16 p-5 rounded-lg w-full outline-none"
                     type="password"
                     placeholder="Password"
                     onChange={(e) => setSignIn({
@@ -114,7 +114,7 @@ const SignIn = (props) => {
                   />
                 </label>
               </div>
-              <div className="space-y-10">
+              <div className="space-y-10 pb-10 md:pb-0">
                 <button type="button" className="w-full bg-white h-16 rounded-lg" onClick={handleSignIn}>Sign In</button>
                 <button type="button" className="w-full bg-white h-16 rounded-lg inline-block space-x-5">
                   <FcGoogle className="inline-block" size={30} />

@@ -3,390 +3,284 @@ import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { BsPencil } from 'react-icons/bs';
+import { useHistory } from 'react-router';
 import Footer from '../footer/footer';
 import defaultAvatar from '../../assets/default-avatar.png';
 import Navbar from '../../navbar/navbar';
 import { authSignOut } from '../../redux/actions/auth';
 import './profile.css';
-import { getUserSigned, updateProfile } from '../../redux/actions/user';
+import {
+  getUserSigned, updateProfile, uploadPicture, uploadErrorDefault
+} from '../../redux/actions/user';
 
 const { REACT_APP_BACKEND_URL: URL } = process.env;
 
 const Profile = (props) => {
+  const history = useHistory();
   const defaultData = props.auth.token;
+  const { refreshToken } = props.auth;
+  const {
+    errMsg, pictureToggle, updateToggle, picErrMsg
+  } = props.user;
   const signed = props.user.signed[0];
-
-  const [contacts, setContacts] = useState(props.user.signed.length > 0 && {
-    picture: null,
-    name: signed.name,
-    user_address: signed.user_address,
-    username: signed.username,
-    phone_number: signed.phone_number,
-    first_name: signed.first_name,
-    last_name: signed.last_name
+  const [contacts, setContacts] = useState({
+    name: defaultData.name,
+    user_address: defaultData.user_address,
+    username: defaultData.username,
+    phone_number: defaultData.phone_number,
+    first_name: defaultData.first_name,
+    last_name: defaultData.last_name
   });
+  const [picture, setPicture] = useState({
+    picture: ''
+  });
+  const [success, setSuccess] = useState(false);
 
   const onClickSignOut = () => {
     props.authSignOut();
   };
 
-  console.log(signed);
-
-  const [modal, setModal] = useState({
-    onClick: false
-  });
-
-  console.log('asd');
-
   const handleUpdateProfile = () => {
-    props.updateProfile(defaultData.refreshToken, defaultData.userData.id, contacts).then(() => {
-      setContacts({
-        ...contacts,
-        picture: null,
-        name: '',
-        user_address: '',
-        username: '',
-        phone_number: '',
-        first_name: '',
-        last_name: ''
+    if (picture.picture !== '') {
+      props.uploadPicture(refreshToken.token, picture);
+    } else {
+      props.updateProfile(refreshToken.token, defaultData.id, contacts).then(() => {
+        props.getUserSigned(refreshToken.token);
+        setSuccess(true);
+      }).catch((err) => {
+        console.log(err);
       });
-      setModal({
-        ...modal,
-        onClick: false
-      });
-      props.getUserSigned(defaultData.refreshToken);
-    }).catch((err) => {
-      console.log(err);
-    });
+    }
   };
 
   useEffect(() => {
-    props.getUserSigned(defaultData.refreshToken);
-  }, [defaultData.userData]);
+    if (pictureToggle) {
+      props.updateProfile(refreshToken.token, defaultData.id, contacts).then(() => {
+        props.getUserSigned(refreshToken.token);
+        setSuccess(true);
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+  }, [pictureToggle]);
 
-  console.log(props);
+  useEffect(() => {
+    if (updateToggle) {
+      setTimeout(() => {
+        setSuccess(false);
+        props.uploadErrorDefault();
+      }, 2000);
+    }
+  }, [success]);
+
+  useEffect(() => {
+    if (props.auth.token !== null) {
+      props.getUserSigned(refreshToken?.token);
+    }
+  }, []);
 
   return signed !== undefined && (
-    <div>
-      <div>
+    <div className="profile-banner overflow-x-hidden">
+      <div className="bg-white relative bottom-10 md:bottom-0">
         <Navbar />
       </div>
-      <div className="profile-banner">
-        <div className="pl-36 pt-52 flex">
-          <div className="user-profile-box flex justify-center">
-            <div className="absolute top-52">
-              <p className="primary-shadow primary font-bold text-white text-4xl">User Profile</p>
+      {success && (
+        <div className="modal w-screen h-screen flex justify-center items-center">
+          <div className="flex justify-center items-center rounded-lg bg-white">
+            <p className="font-bold text-2xl primary-brown-text my-14 mx-24">Profile Updated</p>
+          </div>
+        </div>
+      )}
+      <div className="md:px-44 mt-7 mb-14">
+        <p className="primary-shadow primary md:py-7 text-center md:text-justify font-bold text-white text-2xl md:text-4xl">User Profile</p>
+        <div className="h-14 justify-center flex md:justify-start">
+          <p className="text-red-600 font-semibold text-2xl">{errMsg}</p>
+        </div>
+        <div className="flex flex-col md:flex-row space-x-10 md:bg-gray-50 primary rounded-xl">
+          <div className="flex flex-col md:px-36 mt-14">
+            <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col justify-center items-center mb-10">
+                <img className="w-32 h-32 md:h-44 md:w-44 object-cover rounded-full mb-7" src={`${URL}${signed.picture}` ? `${URL}${signed.picture}` : defaultAvatar} alt="" />
+                <p className="font-bold text-white md:text-black text-xl">{signed.name}</p>
+                <p className="text-lg text-white md:text-black">{signed.username}</p>
+              </div>
+              <div className="flex flex-col justify-center items-center">
+                <div className="h-10">
+                  <p className="text-red-600 font-semibold text-xl">{picErrMsg}</p>
+                </div>
+                <div className="w-44 h-14 md:h-20 md:w-72 rounded-lg bg-yellow-500 flex justify-center items-center font-bold save-changes-color">
+                  Choose Photo
+                  <input
+                    className="cursor-pointer w-auto absolute block opacity-0"
+                    type="file"
+                    onChange={(e) => setPicture({
+                      ...picture,
+                      picture: e.target.files[0]
+                    })}
+                  />
+                </div>
+                <button type="button" className="mt-7 text-one-bg w-44 h-14 md:h-20 md:w-72 rounded-lg font-bold text-white">Remove Photo</button>
+              </div>
+            </div>
+            <div className="flex flex-col mt-14 items-center">
+              <button onClick={() => history.push('/confirm-password')} type="button" className="w-44 h-14 md:h-20 md:w-72 rounded-2xl border-2 save-changes-color font-bold bg-white">Edit Password</button>
+              <div className="w-60">
+                <p className="tracking-wider text-center text-white md:text-black font-bold text-xl py-10">
+                  Do you want to save the change?
+                </p>
+              </div>
+              <div className="flex flex-col justify-center items-center space-y-7">
+                <button type="button" onClick={handleUpdateProfile} className="w-52 h-14 md:w-72 md:h-20 border-1 text-one-bg font-bold text-white rounded-2xl">Save Change</button>
+                <button type="button" className="w-52 h-14 md:w-72 md:h-20 border-1 save-changes-color font-bold bg-yellow-500 rounded-2xl">Cancel</button>
+                <button type="button" onClick={onClickSignOut} className="w-52 h-14 md:w-72 md:h-20 border-2 rounded-2xl save-changes-color font-bold bg-white">Log Out</button>
+              </div>
             </div>
           </div>
-
-          <div className="primary user-profile absolute bg-white user-description items-center rounded-lg p-4">
-            <div className="flex-col flex items-center h-full justify-between">
-              <div className="space-y-7">
-                <div className="flex flex-row justify-between">
-                  <div className="flex items-center space-y-4 flex-col justify-center">
+          <div className="bg-white shadow-xl w-80 relative right-4 md:right-0 md:w-full rounded-lg user-profile my-14 md:px-24">
+            <div className="flex flex-col space-y-20 mx-24">
+              <div className="flex flex-row justify-between items-center pt-14">
+                <p className="font-bold text-xl">Contacts</p>
+                <div className="flex justify-center items-center w-7 h-7 md:w-10 md:h-10 rounded-full text-one-bg">
+                  <BsPencil className="text-white text-lg md:text-xl" />
+                </div>
+              </div>
+              <div className="flex flex-col md:flex-row justify-between">
+                <label htmlFor>
+                  <p className="text-gray-300 font-bold text-lg">Email Address :</p>
+                  <div className="border-b-2 w-full">
                     <input
-                      className="w-full"
-                      type="file"
+                      className="w-full outline-none"
+                      value={contacts.username}
+                      type="text"
+                      placeholder=""
                       onChange={(e) => setContacts({
                         ...contacts,
-                        picture: e.target.files[0]
+                        username: e.target.value
                       })}
                     />
-                    <img className="h-32 w-32 rounded-full" src={`${URL}${signed.picture}` ? `${URL}${signed.picture}` : defaultAvatar} alt="" />
                   </div>
+                </label>
+                <label htmlFor>
+                  <p className="text-gray-300 font-bold text-lg">Mobile Number :</p>
+                  <div className="border-b-2">
+                    <input
+                      className="w-full outline-none"
+                      value={contacts.phone_number}
+                      type="text"
+                      placeholder=""
+                      onChange={(e) => setContacts({
+                        ...contacts,
+                        phone_number: e.target.value
+                      })}
+                    />
+                  </div>
+                </label>
+              </div>
+              <label htmlFor>
+                <p className="text-gray-300 font-bold text-lg">Delivery Address :</p>
+                <div className="border-b-2">
+                  <input
+                    className="mr-24 outline-none"
+                    value={contacts.user_address}
+                    type="text"
+                    placeholder=""
+                    onChange={(e) => setContacts({
+                      ...contacts,
+                      user_address: e.target.value
+                    })}
+                  />
                 </div>
-                <div className="flex-col leading-9 text-center">
+              </label>
+              <p className="font-bold text-xl">Details</p>
+              <div className="flex flex-col md:flex-row justify-between">
+                <label htmlFor>
+                  <p className="text-gray-300 font-bold text-lg">Display Name :</p>
+                  <div className="border-b-2">
+                    <input
+                      className="w-full outline-none"
+                      value={contacts.name}
+                      type="text"
+                      placeholder=""
+                      onChange={(e) => setContacts({
+                        ...contacts,
+                        name: e.target.value
+                      })}
+                    />
+                  </div>
+                </label>
+                <label htmlFor>
+                  <p className="text-gray-300 font-bold text-lg">DD/MM/YY :</p>
+                  <div className="border-b-2">
+                    <input
+                      className="w-full outline-none"
+                      type="text"
+                      placeholder=""
+                    />
+                  </div>
+                </label>
+              </div>
+              <label htmlFor>
+                <p className="text-gray-300 font-bold text-lg">First Name :</p>
+                <div className="border-b-2">
+                  <input
+                    className="w-full outline-none"
+                    value={contacts.first_name}
+                    type="text"
+                    placeholder=""
+                    onChange={(e) => setContacts({
+                      ...contacts,
+                      first_name: e.target.value
+                    })}
+                  />
+                </div>
+              </label>
+              <label htmlFor>
+                <p className="text-gray-300 font-bold text-lg">Last Name :</p>
+                <div className="border-b-2">
+                  <input
+                    className="w-full outline-none"
+                    value={contacts.last_name}
+                    type="text"
+                    placeholder=""
+                    onChange={(e) => setContacts({
+                      ...contacts,
+                      last_name: e.target.value
+                    })}
+                  />
+                </div>
+              </label>
+              <div className="flex flex-row justify-center space-x-24 py-10 items-center">
+                <div className="flex flex-row space-x-3">
+                  <div className="flex justify-center items-center">
+                    <label htmlFor className="radio">
+                      <input type="radio" name="gender" />
+                      <span className="item" />
+                    </label>
+                  </div>
                   <div>
-                    <p className="font-bold text-2xl">{signed.name}</p>
+                    <span>Male</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-row space-x-3">
+                  <div className="flex justify-center items-center">
+                    <label htmlFor className="radio">
+                      <input type="radio" name="gender" />
+                      <span className="item" />
+                    </label>
                   </div>
                   <div>
-                    <p>{signed.username}</p>
+                    <span>Female</span>
                   </div>
                 </div>
-              </div>
-              <div className="text-center">
-                <p>No Orders Yet</p>
               </div>
             </div>
-            <div />
           </div>
-
-          <div id="user-contacts" className="user-profile primary flex-1 bg-white absolute justify-center items-center rounded-lg">
-            <div className="flex flex-col">
-              <div className="flex-1 flex flex-row pt-5">
-                <div className="flex-1 w-96 relative pl-10">
-                  <p className="font-bold text-gray-600 text-2xl">Contacts</p>
-                </div>
-                <div className="flex-1 flex justify-end items-end relative">
-                  <div className="pr-5 pb-2">
-                    <button type="button" className="text-one-bg relative top-1 h-6 w-6 rounded-full text-center flex items-center justify-center">
-                      <BsPencil
-                        className="text-white"
-                        // onClick={() => {
-                        //   setContacts({
-                        //     ...contacts,
-                        //     username: signed.username,
-                        //     phone_number: signed.phone_number,
-                        //     user_address: signed.user_address
-                        //   });
-                        // }}
-                      />
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex-1 pt-5">
-                <div className="flex flex-row h-96 pl-10">
-
-                  <div className="flex-1">
-                    <div className="user-contact-modal flex flex-col">
-                      <div className="flex-1">
-                        <label htmlFor>
-                          <p className="text-gray-400">
-                            Email Address:
-                          </p>
-                          <div className="bottom-border">
-                            <input
-                              className="w-full"
-                              value={contacts.username}
-                              type="text"
-                              placeholder=""
-                              onChange={(e) => setContacts({
-                                ...contacts,
-                                username: e.target.value
-                              })}
-                            />
-                          </div>
-                        </label>
-                      </div>
-                      <div className="flex-1 pt-36">
-                        <label htmlFor>
-                          <p className="text-gray-400">
-                            {' '}
-                          </p>
-                          Delivery Address
-                          <div className="bottom-border-2nd">
-                            <input
-                              className="w-full"
-                              value={contacts.user_address}
-                              type="text"
-                              placeholder=""
-                              onChange={(e) => setContacts({
-                                ...contacts,
-                                user_address: e.target.value
-                              })}
-                            />
-                          </div>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex-1">
-                    <div className="user-contact-modal">
-                      <label htmlFor>
-                        <p className="text-gray-400">
-                          Mobile Number:
-                        </p>
-                        <div className="bottom-border">
-                          <input
-                            className="w-full"
-                            value={contacts.phone_number}
-                            type="text"
-                            placeholder=""
-                            onChange={(e) => setContacts({
-                              ...contacts,
-                              phone_number: e.target.value
-                            })}
-                          />
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <div className="user-details user-profile primary border-2 bg-white flex-1">
-            <div className="flex flex-row">
-
-              <div className="flex flex-col">
-
-                <div className="flex-1 flex flex-row pt-5">
-                  <div className="flex-1 w-96 relative pl-10">
-                    <p className="font-bold text-gray-600 text-2xl">Details</p>
-                  </div>
-                  <div id="contacts-pen" className="flex-1 flex justify-end items-end relative">
-                    <div className="details-pen pb-2">
-                      <button type="button" className="text-one-bg relative top-1 h-6 w-6 rounded-full text-center flex items-center justify-center">
-                        <BsPencil
-                          className="text-white"
-                          // onClick={() => {
-                          //   setModal({
-                          //     ...modal,
-                          //     onClick: true
-                          //   });
-                          //   setContacts({
-                          //     ...contacts,
-                          //     name: signed.name,
-                          //     first_name: signed.first_name,
-                          //     last_name: signed.last_name
-                          //   });
-                          // }}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex-1 pt-5">
-                  <div className="flex flex-row h-96 pl-10 space-x-10">
-
-                    <div className="flex-1">
-                      <div className="user-contact-modal flex flex-col">
-                        <div className="flex-1">
-                          <label htmlFor>
-                            <p className="text-gray-400">
-                              Display name:
-                            </p>
-                            <div className="bottom-border">
-                              <input
-                                className="w-full"
-                                // defaultValue={contacts.name}
-                                value={contacts.name}
-                                type="text"
-                                placeholder=""
-                                onChange={() => setContacts({
-                                  ...contacts,
-                                  name: signed.name
-                                })}
-                              />
-                            </div>
-                          </label>
-                        </div>
-                        <div className="flex-1">
-                          <label htmlFor>
-                            <p className="text-gray-400">
-                              First name:
-                            </p>
-                            <div className="bottom-border-2nd">
-                              <input
-                                className="w-full"
-                                value={contacts.first_name}
-                                type="text"
-                                placeholder=""
-                                onChange={(e) => setContacts({
-                                  ...contacts,
-                                  first_name: e.target.value
-                                })}
-                              />
-                            </div>
-                          </label>
-                        </div>
-                        <div className="flex-1">
-                          <label htmlFor>
-                            <p className="text-gray-400">
-                              Last name:
-                            </p>
-                            <div className="bottom-border-2nd">
-                              <input
-                                className="w-full"
-                                value={contacts.last_name}
-                                type="text"
-                                placeholder=""
-                                onChange={(e) => setContacts({
-                                  ...contacts,
-                                  last_name: e.target.value
-                                })}
-                              />
-                            </div>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex-1 pl-20">
-
-                      <div className="flex flex-col">
-
-                        <div className="flex-1 user-contact-modal">
-                          <div className="text-gray-400">
-                            <p>DD/MM/YY:</p>
-                          </div>
-                          <div className="bottom-border">
-                            <p>03/04/90</p>
-                          </div>
-                        </div>
-
-                        <div className="user-contact-modal pt-10 flex flex-col space-y-5">
-                          <div className="flex flex-row space-x-3">
-                            <div className="flex justify-center items-center">
-                              <label htmlFor className="radio">
-                                <input type="radio" name="gender" />
-                                <span className="item" />
-                              </label>
-                            </div>
-                            <div>
-                              <span>Male</span>
-                            </div>
-                          </div>
-
-                          <div className="flex flex-row space-x-3">
-                            <div className="flex justify-center items-center">
-                              <label htmlFor className="radio">
-                                <input type="radio" name="gender" />
-                                <span className="item" />
-                              </label>
-                            </div>
-                            <div>
-                              <span>Female</span>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                    <div className="flex-1 flex flex-col space-y-8 pl-24">
-                      <div className="font-bold text-white text-2xl flex items-center justify-center text-center relative bottom-14">
-                        <p className="w-72">
-                          Do you want to save the change?
-                        </p>
-                      </div>
-                      <div className="flex-1 flex flex-col space-y-5 w-96 h-44">
-                        <div className="flex items-center h-16 rounded-2xl">
-                          <button type="button" className="text-one-bg w-full h-full rounded-2xl font-bold text-white text-xl" onClick={handleUpdateProfile}>Save Change</button>
-                        </div>
-                        <div className="flex h-16 rounded-2xl">
-                          <button type="button" className="text-two-bg w-full h-full save-changes-color rounded-2xl font-bold text-xl">Cancel</button>
-                        </div>
-                      </div>
-                      <div className="flex-1 flex flex-col space-y-3 save-changes-color">
-                        <div className="flex items-center h-16 rounded-2xl bg-white">
-                          <button type="button" className="font-bold w-full h-full">Edit Password</button>
-                        </div>
-                        <div className="flex h-16 rounded-2xl bg-white">
-                          <button onClick={onClickSignOut} type="button" className="font-bold w-full h-full">Sign Out</button>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-          </div>
-
         </div>
-
       </div>
-      <Footer />
+      <div className="bg-white">
+        <Footer />
+      </div>
     </div>
   );
 };
@@ -395,6 +289,8 @@ Profile.defaultProps = ({
   updateProfile: () => {},
   authSignOut: () => {},
   getUserSigned: () => {},
+  uploadPicture: () => {},
+  uploadErrorDefault: () => {},
   user: [],
   auth: []
 });
@@ -403,6 +299,8 @@ Profile.propTypes = {
   authSignOut: PropTypes.func,
   updateProfile: PropTypes.func,
   getUserSigned: PropTypes.func,
+  uploadPicture: PropTypes.func,
+  uploadErrorDefault: PropTypes.func,
   user: PropTypes.node,
   auth: PropTypes.node
 };
@@ -412,7 +310,9 @@ const mapStateToProps = (state) => ({
   user: state.user
 });
 
-const mapDispatchToProps = { updateProfile, authSignOut, getUserSigned };
+const mapDispatchToProps = {
+  updateProfile, authSignOut, getUserSigned, uploadPicture, uploadErrorDefault
+};
 
 export default connect(
   mapStateToProps,

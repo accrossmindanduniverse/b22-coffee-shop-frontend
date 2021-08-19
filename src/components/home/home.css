@@ -6,9 +6,8 @@
   background-image: url('../../assets/home-background.png');
   background-position: center;
   background-size: cover;
-  position: relative;
   width: 100vw;
-  height: 900px;
+  height: 100vh;
 }
 
 .home-search-modal {
@@ -78,14 +77,13 @@
 }
 
 .container-2nd {
-  width: 100wh;
-  height: auto;
   background: #fffafa;
 }
 
 .stores-offer {
-  width: 400px;
+  width: auto;
   height: auto;
+  background-color: '#fff';
   border-radius: 20px;
 }
 
@@ -93,33 +91,14 @@
   background-color: white;
 }
 
-.map-spot-txt {
-  width: 600px;
-}
-
 .world-img {
   width: 1060px;
   height: 537.77px;
 }
 
-.partners-container {
-  height: auto;
-  width: auto;
-}
-
-.customers-love {
-  width: 600px;
-}
-
 .customer-testi {
   width: 500px;
   height: 260px;
-  padding: 30px;
-}
-
-
-.promo-container {
-  height: 200px;
 }
 
 .product-and-engage {

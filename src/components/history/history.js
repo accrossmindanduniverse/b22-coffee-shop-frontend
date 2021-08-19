@@ -8,7 +8,7 @@ import './history.css';
 import { getAllTransactions, deleteTransaction } from '../../redux/actions/items';
 
 const History = (props) => {
-  const { token } = props.auth;
+  const { refreshToken, token } = props.auth;
   const history = useHistory();
   const { allTransactions } = props.items;
   const [modal, setModal] = useState({
@@ -32,13 +32,15 @@ const History = (props) => {
         onClick: false
       });
       setDeleteItem([]);
-      props.getAllTransactions(token.refreshToken, token.userData.id);
+      props.getAllTransactions(refreshToken.token, token.id);
       setCheckBox({
         ...checkBox,
         onClick: false
       });
     });
   };
+
+  console.log(token, 'history');
 
   const showModal = (visible) => {
     setModal({
@@ -69,14 +71,14 @@ const History = (props) => {
 
   useEffect(() => {
     if (deleteItem.length === 0) {
-      props.getAllTransactions(token.refreshToken, token.userData.id);
+      props.getAllTransactions(refreshToken.token, token.id);
     }
   }, [deleteItem]);
 
   console.log(deleteItem, 'test123123');
 
   const getAllItemTransactions = () => {
-    props.getAllTransactions(token.refreshToken, token.userData.id);
+    props.getAllTransactions(refreshToken.token, token.id);
   };
 
   useEffect(() => {
@@ -101,7 +103,7 @@ const History = (props) => {
 
           </button>
           <button
-            onClick={() => handleDeleteTransaction(token.refreshToken, deleteItem)}
+            onClick={() => handleDeleteTransaction(refreshToken.token, deleteItem)}
             type="button"
             className="h-14 w-32 delete-btn rounded-xl"
           >
@@ -114,7 +116,7 @@ const History = (props) => {
     <div className="history-banner w-screen h-screen p-10">
       <div className="flex flex-col">
         <div className="flex flex-col items-center justify-center">
-          <p className="font-black text-white text-4xl checkout-text">Let&apos;s see what you have bought!</p>
+          <p className="font-black text-2xl text-center text-white md:text-4xl checkout-text">Let&apos;s see what you have bought!</p>
           <button
             type="button"
             className="font-black text-white text-xl checkout-text"
@@ -143,7 +145,7 @@ const History = (props) => {
         }
         {
           allTransactions.length > 0 ? (
-            <div className="grid grid-cols-5 grid-rows-5 gap-10 rubik">
+            <div className="flex flex-col space-y-7 md:space-y-0 md:grid md:grid-cols-5 md:grid-rows-5 md:gap-10 rubik">
               {
               allTransactions.map((item) => (
                 <div className="flex flex-row bg-white w-full py-10 rounded-lg">
@@ -152,10 +154,10 @@ const History = (props) => {
                   </div>
                   <div className="flex flex-col">
                     <div>
-                      <p>{item.code}</p>
+                      <p className="font-black">{item.code}</p>
                     </div>
                     <div>
-                      <p>{item.total}</p>
+                      <p className="font-bold">{item.total}</p>
                     </div>
                     <div className="w-72 flex flex-row">
                       <div>

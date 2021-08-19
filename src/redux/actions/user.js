@@ -4,50 +4,15 @@ const { REACT_APP_BACKEND_URL: URL } = process.env;
 
 export const updateProfile = (token, id, userData) => async (dispatch) => {
   const formData = new FormData();
-  formData.append('picture', userData.picture);
-  formData.append('first_name', userData.fistName);
-  formData.append('last_name', userData.lastName);
+  formData.append('first_name', userData.first_name);
+  formData.append('last_name', userData.last_name);
   formData.append('name', userData.name);
-  formData.append('phone_number', userData.phoneNumber);
-  formData.append('user_address', userData.userAddress);
+  formData.append('phone_number', userData.phone_number);
+  formData.append('user_address', userData.user_address);
   formData.append('username', userData.username);
-  // eslint-disable-next-line no-plusplus
-  // const cleanData = (setData) => {
-  // eslint-disable-next-line no-restricted-syntax
-  // for (const newData in setData) {
-  // eslint-disable-next-line max-len
-  // if (setData[newData] === null || setData[newData] === undefined || setData[newData] === '' || setData[newData] === {}) {
-  // eslint-disable-next-line no-param-reassign
-  //       delete setData[newData];
-  //     }
-  //   }
-  //   return setData;
-  // };
-  // eslint-disable-next-line no-restricted-syntax
-  console.log(userData, 'test action');
-  // eslint-disable-next-line no-restricted-syntax
-  // const cleanData = (setData) => {
-  // eslint-disable-next-line no-restricted-syntax
-  //   for (const pair of setData.entries()) {
-  //     console.log(`${pair[0]}, ${pair[1]}`);
-  //     console.log(pair[setData], 'test pair');
-  // eslint-disable-next-line max-len
-  //     if (pair[setData] === null || pair[setData] === undefined || pair[setData] === '' || pair[setData] === {}) {
-  //       delete pair[setData];
-  //     }
-  //   }
-  //   return setData;
-  // };
 
   try {
     const { data } = await http(token, id).put(`${URL}/user/update-profile`, formData);
-    // picture: formData.picture,
-    // first_name: [...formData][1][1],
-    // last_name: [...formData][2][1],
-    // name: [...formData][3][1],
-    // phone_number: [...formData][4][1],
-    // user_address: [...formData][5][1],
-    // username: [...formData][6][1],
     dispatch({
       type: 'UPDATE_PROFILE',
       payload: data.data
@@ -56,20 +21,100 @@ export const updateProfile = (token, id, userData) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: 'UPDATE_PROFILE_FAILED',
-      payload: err.response.data.data
+      error: err.response.data.data
     });
   }
   return null;
 };
 
+export const uploadPicture = (token, setData) => async (dispatch) => {
+  const form = new FormData();
+  form.append('picture', setData.picture);
+  try {
+    const { data } = await http(token).put(`${URL}/user/upload-picture`, form);
+    dispatch({
+      type: 'UPLOAD_PICTURE',
+      payload: data.data
+    });
+  } catch (err) {
+    dispatch({
+      type: 'UPLOAD_PICTURE_REJECTED',
+      error: err.response.data.data
+    });
+  }
+};
+
 export const getUserSigned = (token) => async (dispatch) => {
   try {
-    const { data } = await http(token).get(`${URL}/user/singed`);
+    const { data } = await http(token).get(`${URL}/user/signed`);
     dispatch({
-      type: 'GET_USER_SINGED',
+      type: 'GET_USER_SIGNED',
       payload: data.data
     });
   } catch (err) {
     console.log(err);
   }
+};
+
+export const confirmPassword = (token, setData) => async (dispatch) => {
+  const form = new URLSearchParams(setData);
+  try {
+    const { data } = await http(token).post(`${URL}/user/confirm-password`, form);
+    dispatch({
+      type: 'CONFIRM_PASSWORD',
+      payload: data.data
+    });
+  } catch (err) {
+    dispatch({
+      type: 'CONFIRM_PASSWORD_REJECTED',
+      error: err.response.data.data
+    });
+  }
+};
+
+export const editPassword = (token, setData) => async (dispatch) => {
+  console.log(setData, 'test password');
+  const form = new URLSearchParams();
+  form.append('password', setData.password);
+  form.append('resendPassword', setData.resendPassword);
+  console.log(form, 'form change');
+  try {
+    const { data } = await http(token).patch(`${URL}/user/update-password`, form);
+    dispatch({
+      type: 'UPDATE_PASSWORD',
+      payload: data.data
+    });
+  } catch (err) {
+    dispatch({
+      type: 'UPDATE_PASSWORD_REJECTED',
+      error: err.response.data.data
+    });
+  }
+};
+
+export const searchUser = (token, search) => async (dispatch) => {
+  try {
+    const { data } = await http(token).get(`${URL}/user?search=${search}`);
+    dispatch({
+      type: 'SEARCH_USER',
+      payload: data.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: 'SEARCH_USER_REJECTED',
+      error: err.response.data.data,
+    });
+  }
+};
+
+export const getErrorDefault = () => (dispatch) => {
+  dispatch({
+    type: 'GET_USER_DEFAULT'
+  });
+};
+
+export const uploadErrorDefault = () => (dispatch) => {
+  dispatch({
+    type: 'UPLOAD_ERROR_DEFAULT'
+  });
 };

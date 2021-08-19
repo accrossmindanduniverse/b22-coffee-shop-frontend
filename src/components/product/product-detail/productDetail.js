@@ -1,8 +1,8 @@
-import { AiOutlineRight } from 'react-icons/ai';
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './productDetail.css';
-// import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Navbar from '../../../navbar/navbar';
 import Footer from '../../footer/footer';
@@ -12,17 +12,18 @@ import ItemAmountCounter from './itemAmountCounter';
 import { addItems } from '../../../redux/actions/cart';
 
 function ProductDetail(props) {
-  // const history = useHistory();
   const { itemsAndVariants } = props.items;
-  const signed = props.user.signed[0];
   const { getId } = props.location.state;
   const { variantDetail } = props.items;
+  const [defaultAmount, setDefaultAmount] = useState(false);
   const [tab, setTab] = useState();
+  const [sendDataToCart, setSendDataToCart] = useState({
+    data1: [],
+    data2: []
+  });
   const [variants, setVariants] = useState([]);
   const [newData, setNewdata] = useState([]);
-  const [addressModal, setAddressModal] = useState({
-    clicked: false
-  });
+  const [getNewData, setGetNewData] = useState([]);
 
   const mapAllVariantName = (key) => {
     const variantName = [];
@@ -43,16 +44,30 @@ function ProductDetail(props) {
     setNewdata(allItemsArr);
   };
 
-  const handleCheckAddress = (visible) => {
-    setAddressModal({
-      ...addressModal,
-      clicked: visible
-    });
-  };
-
   const handleVariantTabClick = (tabComp) => {
     props.getDetailVariant(getId, tabComp);
     setTab(tabComp);
+  };
+
+  const getDataFromChild = (data) => {
+    setGetNewData(data, newData);
+    setSendDataToCart({
+      ...sendDataToCart,
+      data1: data,
+      data2: newData
+    });
+  };
+
+  const sendFinalData = () => {
+    props.addItems(sendDataToCart.data1, sendDataToCart.data2);
+  };
+
+  console.log(defaultAmount, 'default');
+
+  const handleTwoEvents = () => {
+    setDefaultAmount(true);
+    getDataFromChild();
+    sendFinalData();
   };
 
   useEffect(() => {
@@ -75,127 +90,115 @@ function ProductDetail(props) {
   }, [variants[0]]);
 
   return (
-    <div className="parent">
-      {/* <div onChange={() => setAd
-      dressModal(true)} className="modal w-screen h-screen flex justify-center items-center">
-        <div className="flex flex-col bg-white rounded-xl h-60 btn ensure-btn p-5 space-y-20">
-          <p className="font-bold text-
-          2xl text-center">It seems you&apos;re not filled your address </p>
-          <div className="flex-1 font-black text-2xl flex flex-row space-x-40">
-            <button
-              onClick={() => handleCheckAddress(false)}
-              type="button"
-              className="h-14 w-32 cancel-btn rounded-xl"
-            >
-              Cancel
-
-            </button>
-            <button
-              onClick={() => history.push('/profile')}
-              type="button"
-              className="h-14 w-32 delete-btn rounded-xl"
-            >
-              Edit
-            </button>
-          </div>
-        </div>
-      </div> */}
-      <div />
+    <div className="overflow-x-hidden">
       <Navbar />
-      <div className="">
-        {
-    newData.map((newMap) => (
-      <div className="flex flex-row bg-gray-100 space-x-72 justify-center pt-32">
-        <div className="flex flex-row">
-          <div className="flex flex-col">
-            <div className="space-y-20">
-              <div className="flex flex-row space-x-3">
-                <div>
-                  <p>Favorite & Promo</p>
-                </div>
-                <div>
-                  <AiOutlineRight />
-                </div>
-                <div>
-                  <p className="primary-brown font-black">{newMap.name}</p>
-                </div>
+      {newData.map((newMap) => (
+        <div className="flex flex-col md:flex-row bg-gray-50">
+          <div className="md:ml-48">
+            <div key={newMap.id} className="flex flex-col items-center space-y-10">
+              <p className="mt-20">
+                Favorite & Promo
+                {' '}
+                <span className="primary-brown font-bold">
+                  {' '}
+                  &gt;
+                  {newMap.name}
+                </span>
+              </p>
+              <div className="w-96 flex justify-center items-center ">
+                <img className="w-64 h-64 rounded-full object-cover bg-gray-300" src={newMap.picture} alt="" />
               </div>
-              <div className="w-96 flex justify-center">
-                <img className="h-64 w-h-64 rounded-full bg-gray-700" src={newMap.picture} alt="" />
-              </div>
-              <div className="w-96 text-center space-y-4 font-black uppercase">
-                <p className="font-black text-4xl" />
-                <p className="text-2xl">
+              <div className="flex flex-col justify-center items-center">
+                <p className="font-black text-4xl">{newMap.name}</p>
+                <p className="font-bold text-2xl">
                   IDR
                   {' '}
                   {Number(newMap.final_price).toLocaleString('ind')}
                 </p>
               </div>
-              {signed !== undefined && (
-              <div className="flex flex-col w-96 text-center space-y-7">
-                {signed.user_address === undefined ? (
-                  <button onClick={() => handleCheckAddress(true)} type="button" className="h-14 rounded-2xl primary-brown-background text-white font-bold text-xl">Add to cart</button>
-                ) : (
-                  <button type="button" className="h-14 rounded-2xl primary-brown-background text-white font-bold text-xl">Add to Cart</button>
-
+              <div className=" flex flex-col space-y-10 justify-center items-center pt-28 ">
+                {getNewData >= 1 && (
+                <button
+                  onClick={handleTwoEvents}
+                  type="button"
+                  className="flex justify-center items-center rounded-xl primary-brown-background font-bold w-56 h-14 text-xl text-white md:w-96 md:h-20"
+                >
+                  Add To Cart
+                </button>
                 )}
-                {/*  onClick={handleClickToCart} */}
-                <button type="button" className="h-14 rounded-2xl primary-yellow-background primary-brown font-bold text-xl">Ask Staff</button>
+                <button type="button" className="flex justify-center items-center rounded-xl primary-yellow-background font-bold w-56 h-14 text-xl primary-brown md:w-96 md:h-20">
+                  Ask Staff
+                </button>
               </div>
-              )}
             </div>
           </div>
-        </div>
-        <div className="delivery-height space-y-10 flex flex-col">
-          <div className="delivery-text space-y-7 bg-white rounded-lg p-10">
-            <div className="flex flex-row">
-              <p className="text-3xl">{newMap.delivery_on}</p>
-            </div>
-            <div className="flex flex-row text-justify">
-              <p className="text-3xl">{newMap.item_description}</p>
-            </div>
-            <div className="flex-1 flex flex-col space-y-8">
-              <div className="text-center">
-                <p className="font-black text-xl">Choose size</p>
-              </div>
-              <div>
-                <div className="flex flex-row space-x-24 justify-center">
-                  {
-        variants.map((variantName) => (
-          <div className="flex text-center relative">
-            <button type="button" onClick={() => handleVariantTabClick(variantName)} className={`h-8 w-8 rounded-full ${variantName === tab ? 'bg-gray-300' : 'bg-yellow-400'} text-xl font-bold`}>{variantName}</button>
-          </div>
-        ))
-      }
+          <div className="flex flex-col mt-14 mb-14">
+            <div className="rounded-lg bg-white md:ml-96 md:mr-96">
+              <div className="flex flex-col mt-14 mb-14">
+                <div className="flex flex-col space-y-7 mr-14 ml-14">
+                  <p className="text-3xl">{newMap.delivery_on}</p>
+                  <p className="tracking-wider text-3xl text-justify">
+                    {newMap.item_description}
+                  </p>
+                </div>
+                <div className="flex flex-col justify-center items-center mt-20">
+                  <p className="text-xl font-black text-center">Choose Size</p>
+                  <div className="flex flex-row space-x-7 justify-center items-center mt-10 ">
+                    {variants.map((variantName) => (
+                      <div key={variantName}>
+                        <div>
+                          <button
+                            type="button"
+                            onClick={() => handleVariantTabClick(variantName)}
+                            className={`h-8 w-8 rounded-full ${variantName === tab ? 'bg-gray-300' : 'bg-yellow-400'} flex justify-center items-center text-xl font-bold`}
+                          >
+                            {variantName}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
                 </div>
               </div>
-
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center mt-14 mb-14">
+                <p className="text-xl font-bold">Choose Delivery Method</p>
+                <div className="flex flex-col space-y-5 md:space-y-0 md:flex-row md:space-x-5 mt-14">
+                  <button type="button" className="primary-brown-background rounded-lg primary-brown-background font-bold text-white w-44 h-14">
+                    Dine In
+                  </button>
+                  <button type="button" className="primary-brown-background rounded-lg  font-bold text-white w-44 h-14">
+                    Door Delivery
+                  </button>
+                  <button type="button" className="primary-brown-background rounded-lg primary-brown-background font-bold text-white w-44 h-14">
+                    <p>Pick Up</p>
+                  </button>
+                </div>
+              </div>
+              <div className="flex flex-row md:mb-44">
+                <label>Set Time: </label>
+                <input className="bg-transparent outline-none border-b-2" type="text" name="" id="" placeholder="Enter the time you'll arrive" />
+              </div>
             </div>
           </div>
-          <div className="delivery-choosing space-y-10 space-x-4">
-            <p className="text-center font-black text-xl">Choose Delivery Method</p>
-            <button type="button" className="w-36 h-9 bg-gray-200 relative rounded-lg">Dine In</button>
-            <button type="button" className="w-36 h-9 bg-gray-200 relative rounded-lg">Door Delivery</button>
-            <button type="button" className="w-36 h-9 bg-gray-200 relative rounded-lg">Pick Up</button>
-          </div>
-
-          <div className="flex-1 relative top-10">
-            <form className="flex flex-row space-x-3">
-              <p className="font-semibold">Set time :</p>
-              <input className="time-input" type="text" placeholder="Enter the time you'll arrived" />
-            </form>
-          </div>
         </div>
-
+      ))}
+      <div>
+        {variantDetail.length > 0 && (
+        <ItemAmountCounter
+          getDataFromChild={getDataFromChild}
+          variants={variants}
+          tab={tab}
+          defaultAmount={defaultAmount}
+          checkoutData={newData}
+        />
+        )}
       </div>
-    ))
-    }
-        <div className="">
-          {variantDetail.length > 0
-                  && <ItemAmountCounter checkoutData={newData} />}
-        </div>
+      <div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }
@@ -203,22 +206,24 @@ function ProductDetail(props) {
 ProductDetail.defaultProps = ({
   getDetailVariant: () => {},
   getItemsAndVariants: () => {},
+  addItems: () => {},
   items: [],
-  user: [],
+  // user: [],
   location: []
 });
 
 ProductDetail.propTypes = {
   getDetailVariant: PropTypes.func,
   getItemsAndVariants: PropTypes.func,
+  addItems: PropTypes.func,
   items: PropTypes.node,
-  user: PropTypes.node,
+  // user: PropTypes.node,
   location: PropTypes.node
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  user: state.user,
+  // user: state.user,
   items: state.items,
 });
 

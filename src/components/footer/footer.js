@@ -4,11 +4,11 @@ import coffee1 from '../../assets/coffee-1.png';
 import './footer.css';
 
 const Footer = () => (
-  <div className="flex flex-row justify-between px-32 py-36">
-    <div className="flex-1 flex flex-col space-y-6">
+  <div className="hidden md:flex flex-row justify-between px-32 py-36">
+    <div className="flex flex-col space-y-6">
       <div className="flex flex-row space-x-3 ">
         <div>
-          <img src={coffee1} alt="" />
+          <img className="object-cover" src={coffee1} alt="" />
         </div>
         <div className="flex items-center">
           <p className="tracking-wider primary-text font-bold text-lg">Coffee Shop</p>

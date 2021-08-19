@@ -10,7 +10,7 @@ function Cart2() {
         <Navbar />
       </div>
       <div className="bg-gray-400 h-screen flex justify-center items-center">
-        <p className="no-items font-black font-sansa text-7xl text-white">Oops you haven&apos;t chosen anything, yet :)</p>
+        <p className="no-items font-black font-sansa text-center text-7xl text-white">Oops you haven&apos;t chosen anything, yet :)</p>
       </div>
       <Footer />
     </div>

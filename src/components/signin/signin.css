@@ -3,6 +3,10 @@
   box-shadow: 2px 2px 10px #FFBA33;
 }
 
+.banner-signin {
+  background-image: url('../../assets/eating.png');
+}
+
 .primary-text {
   color: rgba(106, 64, 41, 1);
 }

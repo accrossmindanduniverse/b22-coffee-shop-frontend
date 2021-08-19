@@ -9,32 +9,16 @@ import './favoriteProduct.css';
 
 const FavoriteProduct = (props) => {
   const getItemsByCategory = props.data;
-  // const { newPageInfo } = props;
   const { items } = props.items.search;
-  // const { nextPage } = props.items.pageInfo;
-  // const searchNext = props.items.search.pageInfo;
-
-  // const handleNextItems = () => {
-  //   props.getItemCategories(props.tab, newPageInfo);
-  // };
-
-  // console.log(getItemsByCategory, newPageInfo, props.tab, 'data test');
-
-  // useEffect(() => {
-  //   props.getItemCategories(props.items.dataByCategory.items);
-  // }, []);
-
-  console.log(props.items, 'search check');
-  console.log(getItemsByCategory, 'testtstst');
 
   return items !== undefined ? (
-    <div>
-      <div className="grid lg:grid-cols-4 grid-rows-2 gap-10 p-10">
+    <div className="overflow-x-hidden">
+      <div className="flex flex-row space-x-7 overflow- md:space-x-0 overflow-x-scroll md:overflow-x-hidden md:grid md:grid-cols-4 md:grid-rows-2 md:gap-10 md:p-10">
         {
           items.map((dataMap) => (
-            <div className="shadow-2xl grid-display h-full">
+            <div className="shadow-2xl grid-display ml-24 relative mb-10 md:mb-0 right-10 md:right-0 md:ml-0 md:mr-0 md:h-full">
 
-              <div className="flex flex-col text-center items-center justify-center space-y-3 h-full">
+              <div className="flex flex-col text-center items-center justify-center space-y-3 h-full w-44 md:w-full">
                 <div className="flex justify-center">
                   <img className="h-24 w-24 rounded-full bg-gray-300" alt="" src={dataMap.picture} />
                 </div>
@@ -67,14 +51,14 @@ const FavoriteProduct = (props) => {
     </div>
   ) : (
     <div>
-      <div className="grid lg:grid-cols-4 grid-rows-2 gap-10 p-10">
+      <div className="flex flex-row space-x-7 overflow- md:space-x-0 overflow-x-scroll md:overflow-x-hidden md:grid md:grid-cols-4 md:grid-rows-2 md:gap-10 md:p-10">
         {
           getItemsByCategory.map((item) => (
-            <div className="shadow-2xl grid-display h-full">
+            <div className="shadow-2xl grid-display ml-24 relative mb-10 md:mb-0 right-10 md:right-0 md:ml-0 md:mr-0 md:h-full">
 
-              <div className="flex flex-col text-center items-center justify-center space-y-3 h-full">
+              <div className="flex flex-col text-center items-center justify-center space-y-3 h-full w-44 md:w-full">
                 <div className="flex justify-center">
-                  <img className="h-24 w-24 rounded-full bg-gray-300" alt="" src={item.picture} />
+                  <img className="h-24 w-24 rounded-full object-cover bg-gray-300" alt="" src={item.picture} />
                 </div>
                 <div>
                   <Link

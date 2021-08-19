@@ -1,0 +1,52 @@
+.parent-chat {
+  font-family: Poppins;
+  background-image: url('../../assets/chat-bg.png');
+  background-position: center;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal {
+  background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+}
+
+.delete-btn {
+  background-color: #6A4029;
+  color: white;
+  font-weight: bolder;
+}
+
+.cancel-btn {
+  border: 2px solid #6A4029;
+  color: #6A4029;
+  font-weight: bolder;
+}
+
+.first-content {
+  height: 100vh;
+}
+
+.room {
+  height: 50vh;
+  overflow-y: auto;
+}
+
+.list {
+  height: auto;
+  overflow-y: auto;
+}
+
+.search-content {
+  overflow-y: auto;
+  height: 50vh;
+}
+
+.search-container {
+  background-color: #6A4029;
+  width: 80vw;
+}

@@ -28,76 +28,94 @@ const Cart = (props) => {
   }, []);
 
   return (
-    <div className="cart-banner w-screen h-screen">
-      <div>
+    <div className="cart-banner w-screen">
+      <div className="relative bottom-7 md:bottom-0">
         <Navbar />
       </div>
-      <div className="flex flex-col py-14 h-screen space-y-12">
-        <div className="w-auto flex px-48">
-          <p className="font-black text-4xl text-white">Checkout your item now!</p>
-        </div>
-        <div className="flex flex-row px-44 h-auto w-screen">
-          <div className="flex flex-col bg-gray-50 rounded-2xl py-10">
-            <div className="flex justify-center items-center">
-              <p className="text-4xl font-black primary-brown-text">Order Summary</p>
-            </div>
-            {
-              items.map((itemMap) => (
-                <div className="px-10 py-7">
-                  <div className="flex flex-row w-full space-x-5">
-                    <div>
-                      <img className="w-14 h-14 rounded-lg" src={itemMap.data2nd[0].picture} alt="" />
+      <div className="flex flex-col space-y-14 md:space-y-0 md:flex-row md:space-x-32 px-20">
+        <div className="flex flex-col md:mr-96 mt-10 md:mb-24">
+          <p className="font-black text-2xl md:text-4xl text-white md:py-10">Checkout your item now</p>
+          <div className="bg-white rounded-xl shadow-xl w-80 right-14 relative md:right-0 md:w-full">
+            <div className="flex flex-col md:px-10 py-20">
+              <p className="primary-brown-text text-3xl pl-7 md:pl-0 py-4 md:py-0 font-bold">Order Summary</p>
+              <div className="flex flex-col px-12">
+                <div className="flex flex-col space-y-5 border-b-2 py-14 overflow-auto h-72">
+                  {items.map((itemMap) => (
+                    <div key={itemMap.data2nd[0].id} className="flex flex-row justify-between">
+                      <div className="flex flex-col space-y-10 md:space-y-0 md:flex-row md:space-x-8">
+                        <div>
+                          <img className="w-20 h-20 rounded-lg object-cover bg-gray-100" src={itemMap.data2nd[0].picture} alt="" />
+                        </div>
+                        <div className="flex flex-col space-y-4">
+                          <p className="text-lg font-semibold">{itemMap.data2nd[0].name}</p>
+                          <p className="text-lg font-semibold">
+                            x
+                            {' '}
+                            (
+                            {itemMap.amount}
+                            )
+                          </p>
+                          <p className="text-lg font-semibold">{itemMap.data2nd[0].variant}</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-center relative top-10 md:top-0 items-center md:mr-7">
+                        <p className="text-lg font-semibold">
+                          IDR
+                          {' '}
+                          {Number(itemMap.data2nd[0].final_price).toLocaleString('ind')}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex flex-col">
-                      <p>{itemMap.data2nd[0].name}</p>
-                      <p>
-                        x
+                  ))}
+                </div>
+                <div className="flex flex-col space-y-14 pt-10">
+                  <div className="flex flex-row space-x-5 md:space-x-0 justify-between">
+                    <div className="flex flex-col space-y-5">
+                      <p className="text-xl font-semibold">SUBTOTAL</p>
+                      <p className="text-xl font-semibold">TAX & FEES</p>
+                      <p className="text-xl font-semibold">SHIPPING</p>
+                    </div>
+                    <div className="flex flex-col space-y-5">
+                      <p className="text-xl font-semibold">
+                        IDR
                         {' '}
-                        {itemMap.amount}
+                        {Number(finalTotal).toLocaleString('ind')}
+                      </p>
+                      <p className="text-xl font-semibold">
+                        IDR
                         {' '}
-                        {itemMap.data2nd[0].variant}
+                        {Number(taxAndFees).toLocaleString('ind')}
+                      </p>
+                      <p className="text-xl font-semibold">
+                        IDR
+                        {' '}
+                        {Number(shipping).toLocaleString('ind')}
                       </p>
                     </div>
                   </div>
-                  <div className="flex justify-end items-center">
-                    <p>
+                  <div className="flex flex-col md:flex-row justify-between">
+                    <p className="primary-brown-text text-3xl font-bold">TOTAL</p>
+                    <p className="primary-brown-text text-3xl font-bold">
                       IDR
                       {' '}
-                      {itemMap.data2nd[0].final_price}
+                      {Number(dealPrice).toLocaleString('ind')}
                     </p>
                   </div>
                 </div>
-              ))
-            }
-
-            <div className="flex flex-col space-y-5 border-t uppercase px-8 py-10">
-              <div className="text-xl space-y-2 w-96 justify-between flex flex-row">
-                <p className="text-xl">subtotal</p>
-                <p>{finalTotal}</p>
-              </div>
-              <div className="text-xl space-y-2 w-96 justify-between flex flex-row">
-                <p>tax & fees</p>
-                <p>{taxAndFees}</p>
-              </div>
-              <div className="text-xl space-y-2 w-96 justify-between flex flex-row">
-                <p>shipping</p>
-                <p>{shipping}</p>
-              </div>
-              <div className="w-96 justify-between flex flex-row">
-                <p className="font-black text-3xl">total</p>
-                <p className="font-black text-3xl">{dealPrice}</p>
               </div>
             </div>
           </div>
-          <Transaction
-            total={dealPrice}
-            finalTotal={finalTotal}
-            taxAndFees={taxAndFees}
-            shipping={shipping}
-          />
         </div>
+        <Transaction
+          total={dealPrice}
+          finalTotal={finalTotal}
+          taxAndFees={taxAndFees}
+          shipping={shipping}
+        />
       </div>
-      <Footer />
+      <div className="bg-white">
+        <Footer />
+      </div>
     </div>
   );
 };

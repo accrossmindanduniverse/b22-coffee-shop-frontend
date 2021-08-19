@@ -14,7 +14,8 @@ export const finalTransaction = (token, transaction) => async (dispatch) => {
       tax: transaction.tax,
       item_amount: transaction.item_amount,
       variant: transaction.variant,
-      payment_method: transaction.payment_method
+      payment_method: transaction.payment_method,
+      user_address: transaction.user_address
     });
     dispatch({
       type: 'POST_TRANSACTION',

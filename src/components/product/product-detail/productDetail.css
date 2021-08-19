@@ -1,5 +1,5 @@
 .parent {
-  font-family: 'Rubik', sans-serif;
+  font-family: Poppins;
 }
 
 .primary-brown {
@@ -26,12 +26,6 @@
 
 .primary-brown-background {
   background: rgba(106, 64, 41, 1);
-}
-
-
-.delivery-text {
-  height: auto;
-  width: auto;
 }
 
 .delivery-height {
