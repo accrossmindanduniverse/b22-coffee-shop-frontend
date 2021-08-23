@@ -33,9 +33,7 @@ const ChatRoom = (props) => {
     recipient_id: id,
   });
   const [downloadUrl, setDownloadUrl] = useState('');
-  const [deleteData, setDeleteData] = useState({
-    recipient_id: '',
-  });
+  const [deleteData, setDeleteData] = useState('');
   const [modal, setModal] = useState(false);
 
   const scrollToBottom = () => {
@@ -63,10 +61,7 @@ const ChatRoom = (props) => {
 
   const showModal = (visible) => {
     setModal(visible);
-    setDeleteData({
-      ...deleteData,
-      recipient_id: id,
-    });
+    setDeleteData(id);
   };
 
   const handleDownload = async (url) => {
@@ -83,10 +78,7 @@ const ChatRoom = (props) => {
     props.deleteChat(token, deleteData).then(() => {
       props.getChat(token);
       setModal(false);
-      setDeleteData({
-        ...deleteData,
-        recipient_id: '',
-      });
+      setDeleteData('');
       props.chatFunc(!props.chatState);
     }).catch((err) => {
       console.log(err);

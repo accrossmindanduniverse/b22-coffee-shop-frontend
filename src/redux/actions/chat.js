@@ -56,11 +56,9 @@ export const downloadFile = (token, setData) => async (dispatch) => {
   }
 };
 
-export const deleteChat = (token, setData) => async (dispatch) => {
-  const form = new URLSearchParams();
-  form.append('recipient_id', setData.recipient_id);
+export const deleteChat = (token, id) => async (dispatch) => {
   try {
-    const { data } = await http(token).put(`${URL}/chat/delete-chat-room`, form);
+    const { data } = await http(token).put(`${URL}/chat/delete-chat-room/${id}`);
     dispatch({
       type: 'DELETE_CHAT_ROOM',
       payload: data.data,
