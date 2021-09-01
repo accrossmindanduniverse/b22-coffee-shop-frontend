@@ -13,6 +13,7 @@
 * Authentication
 * Search, sort, and pagination
 * Payment Gateway
+* Chat
 * Buy Items
 * Update Profile
 * etc
