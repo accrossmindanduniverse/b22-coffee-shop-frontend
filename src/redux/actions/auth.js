@@ -49,7 +49,6 @@ export const authSignUp = (username, password) => async (dispatch) => {
 export const authRefreshToken = (token, setData) => async (dispatch) => {
   const form = new URLSearchParams();
   form.append('refreshToken', setData.refreshToken);
-  console.log(form, 'refresh token');
   try {
     const { data } = await http(token).post(`${URL}/auth/refresh-token`, form);
     dispatch({
@@ -59,7 +58,7 @@ export const authRefreshToken = (token, setData) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: 'REFRESH_TOKEN_REJECTED',
-      error: err.response.data.data
+      error: err.response?.data.data
     });
   }
 };

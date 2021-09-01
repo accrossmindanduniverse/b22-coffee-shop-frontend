@@ -1,3 +1,6 @@
+![](https://i.imgur.com/lgZzsAs.jpg)
+
+
 # Equipments
 * Text Editor (I use Visual Studio Code)
 * React JS

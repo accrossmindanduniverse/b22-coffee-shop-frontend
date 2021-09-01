@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
@@ -30,7 +31,14 @@ const ConfirmPassword = (props) => {
           <p className="text-xl font-semibold text-red-600">{errMsg}</p>
         </div>
         <div className="bg-white rounded-lg justify-center flex my-10 shadow-lg space-y-7">
-          <div className="rounded-full bg-gray-50 my-24 mx-14 justify-center w-full shadow-lg">
+          <div
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleConfirm();
+              }
+            }}
+            className="rounded-full bg-gray-50 my-24 mx-14 justify-center w-full shadow-lg"
+          >
             <input
               onChange={(e) => setPassword({
                 ...password,
