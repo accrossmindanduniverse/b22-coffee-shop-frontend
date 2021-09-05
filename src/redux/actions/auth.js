@@ -11,7 +11,7 @@ export const authSignIn = (username, password, token) => async (dispatch) => {
   form.append('username', username);
   form.append('password', password);
   try {
-    const { data } = await http(token).post('http://localhost:3001/auth/signin', form.toString());
+    const { data } = await http(token).post(`${URL}/auth/signin`, form.toString());
     dispatch({
       type: 'AUTH_SIGNIN',
       payload: data.data
@@ -33,7 +33,7 @@ export const authSignUp = (username, password) => async (dispatch) => {
   form.append('username', username);
   form.append('password', password);
   try {
-    const { data } = await http().post('http://localhost:3001/auth/signup', form.toString());
+    const { data } = await http().post(`${URL}/auth/signup`, form.toString());
     dispatch({
       type: 'AUTH_SIGNUP',
       payload: data.data

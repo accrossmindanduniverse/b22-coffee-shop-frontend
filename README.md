@@ -13,6 +13,7 @@
 * Authentication
 * Search, sort, and pagination
 * Payment Gateway
+* Chat
 * Buy Items
 * Update Profile
 * etc
@@ -36,4 +37,4 @@ https://documenter.getpostman.com/view/11593322/Tzscp6iq
 ```REACT_APP_BACKEND_URL= (URL)```
 
 # Contact
-For more information, please let me know by contacting me at: fajarrizkymaulana186@mail.com
+For more information, please let me know by contacting me at: fajarrizkymaulana186@gmail.com

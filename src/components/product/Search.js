@@ -58,8 +58,6 @@ const Search = (props) => {
     }
   };
 
-  console.log(urlParams.search, 'test');
-
   const handleSort = (sortData) => {
     setSearchData({
       ...searchData,
@@ -80,8 +78,6 @@ const Search = (props) => {
       clicked: true
     });
   };
-
-  console.log(searchData.page);
 
   useEffect(() => {
     setSearchData({

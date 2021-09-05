@@ -71,13 +71,14 @@ const ProductCust = (props) => {
   }, [categoryNames[0]]);
 
   useEffect(() => {
-    if (!urlParams.search) {
+    if (urlParams.search !== '') {
       props.getItemCategories(tab, '1');
     } else {
-      props.searchItem(urlParams.search, 'name', 'asc', '1');
+      props.searchItem(urlParams.search, 'name', 'asc', urlParams.page);
     }
-    console.log('ok');
-  }, [tab, urlParams.search]);
+  }, [tab, urlParams.search, urlParams.page]);
+
+  console.log(urlParams, 'product');
 
   return (
     <div className="parent overflow-x-hidden">
@@ -156,7 +157,6 @@ const ProductCust = (props) => {
               </div>
               {page.map((e) => (
                 <div key={String(e)} className="w-7 h-7 md:w-14 md:h-14 flex justify-center items-center rounded-md bg-gray-300">
-                  {e === newPage && console.log('ok')}
                   <button onClick={() => handlePageClick(e)} className="flex justify-center items-center w-full h-full focus:outline-none" type="button">
                     <p className={`${e === newPage ? 'active' : 'text-gray-900'}`}>{e}</p>
                   </button>
@@ -168,7 +168,7 @@ const ProductCust = (props) => {
                   {' '}
                   {' '}
                   {' '}
-                  {pageInfo.totalData}
+                  {pageInfo.totalPage}
                 </p>
               </div>
               <div className="w-7 h-7 md:w-14 md:h-14 flex justify-center items-center rounded-md bg-gray-300">

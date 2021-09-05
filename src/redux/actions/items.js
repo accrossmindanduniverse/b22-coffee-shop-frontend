@@ -73,7 +73,7 @@ export const getDetailVariant = (id, key) => async (dispatch) => {
 
 export const getAllTransactions = (token, id) => async (dispatch) => {
   try {
-    const { data } = await http(token, id).get('http://localhost:3001/private/user-transactions');
+    const { data } = await http(token, id).get(`${URL}/private/user-transactions`);
     dispatch({
       type: 'GET_ALL_TRANSACTIONS',
       payload: {

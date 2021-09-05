@@ -84,3 +84,9 @@ body {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+@media only screen and (max-width: 600px) {
+  .mobile-history-item {
+    height: 70vh;
+  }
+}

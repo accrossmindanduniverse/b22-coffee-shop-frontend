@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import { http } from '../../helpers/http';
 
+const { REACT_APP_BACKEND_URL: URL } = process.env;
+
 export const addItems = (amount, data2nd) => ({
   type: 'CART_ADD_ITEMS',
   payload: { amount, data2nd }
@@ -8,7 +10,7 @@ export const addItems = (amount, data2nd) => ({
 
 export const finalTransaction = (token, transaction) => async (dispatch) => {
   try {
-    const { data } = await http(token).post('http://localhost:3001/private/transaction', {
+    const { data } = await http(token).post(`${URL}/private/transaction`, {
       item_id: transaction.item_id,
       total: transaction.total,
       tax: transaction.tax,

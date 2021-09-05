@@ -145,7 +145,7 @@ const History = (props) => {
         }
         {
           allTransactions.length > 0 ? (
-            <div className="flex flex-col space-y-7 md:space-y-0 md:grid md:grid-cols-5 md:grid-rows-5 md:gap-10 rubik">
+            <div className="mobile-history-item flex flex-col overflow-y-scroll md:h-full space-y-7 md:space-y-0 md:grid md:grid-cols-5 md:grid-rows-5 md:gap-10 rubik">
               {
               allTransactions.map((item) => (
                 <div className="flex flex-row bg-white w-full py-10 rounded-lg">
