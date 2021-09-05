@@ -24,12 +24,12 @@ const Profile = (props) => {
   } = props.user;
   const signed = props.user.signed[0];
   const [contacts, setContacts] = useState({
-    name: defaultData.name,
-    user_address: defaultData.user_address,
-    username: defaultData.username,
-    phone_number: defaultData.phone_number,
-    first_name: defaultData.first_name,
-    last_name: defaultData.last_name
+    name: signed?.name,
+    user_address: signed?.user_address,
+    username: signed?.username,
+    phone_number: signed?.phone_number,
+    first_name: signed?.first_name,
+    last_name: signed?.last_name
   });
   const [picture, setPicture] = useState({
     picture: ''

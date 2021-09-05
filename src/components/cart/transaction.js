@@ -212,17 +212,22 @@ const Transaction = (props) => {
           </div>
         </div>
         <div>
-          {paymentMethod !== '' && signed[0]?.user_address !== '' ? (
+          {paymentMethod !== '' && (
             <div>
-              <button onClick={showModal} className="outline-none confirm-pay-btn text-white font-black text-lg md:text-2xl flex items-center w-full h-14 md:h-20 justify-center" type="button">
-                Confirm And Pay
-              </button>
-            </div>
-          ) : (
-            <div>
-              <button onClick={() => history.push('/profile')} className="outline-none confirm-pay-btn text-white font-black text-lg md:text-2xl flex items-center w-full h-14 md:h-20 justify-center" type="button">
-                Add address
-              </button>
+              {signed[0]?.user_address !== '' ? (
+                <button onClick={showModal} className="outline-none confirm-pay-btn text-white font-black text-lg md:text-2xl flex items-center w-full h-14 md:h-20 justify-center" type="button">
+                  Confirm And Pay
+                </button>
+              ) : (
+                <button
+                  onClick={() => history.push('/profile')}
+                  className="outline-none confirm-pay-btn text-white font-black text-lg
+                  md:text-2xl flex items-center w-full h-14 md:h-20 justify-center"
+                  type="button"
+                >
+                  Add address
+                </button>
+              )}
             </div>
           )}
         </div>
