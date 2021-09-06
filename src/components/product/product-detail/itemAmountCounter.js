@@ -52,7 +52,7 @@ const ItemAmountCounter = (props) => {
           newData.map((newMap2nd) => (
             <div key={newMap2nd.variant_code} className="w-full flex flex-col md:flex-row items-center justify-between md:ml-24 py-24 md:py-0">
               <div className="flex flex-col md:flex-row space-x-5 items-center md:items-start">
-                <img className="h-24 w-24 rounded-full" src={newMap2nd.picture} alt="" />
+                <img className="h-24 w-24 rounded-full object-cover" src={newMap2nd.picture} alt="" />
                 <div className="flex flex-col space-y-4" onChange={() => setCheckout}>
                   <p className="font-black text-2xl py-14 md:py-0">{newMap2nd.name}</p>
                   <div className="flex flex-row space-x-4 justify-center md:justify-start">

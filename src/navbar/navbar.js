@@ -17,8 +17,6 @@ const Navbar = (props) => {
   const { signed } = useSelector((state) => state.user);
   const [modal, setModal] = useState(false);
 
-  console.log(signed, 'navbar');
-
   const handleSignOut = () => {
     props.authSignOut();
   };

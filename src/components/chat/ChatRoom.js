@@ -113,7 +113,7 @@ const ChatRoom = (props) => {
   }, [room]);
 
   return (
-    <div className="w-full">
+    <div className="mobile-chat-room-parent w-full">
       {modal && (
         <div onChange={() => setModal(true)} className="modal w-screen h-screen flex justify-center items-center">
           <div className="flex flex-col bg-white rounded-xl h-60 btn ensure-btn p-5 space-y-20">
@@ -139,11 +139,11 @@ const ChatRoom = (props) => {
       )}
       <div className="flex flex-col space-y-10 w-full">
         <div className="flex justify-between bg-white p-14 rounded-xl">
-          <div className=" flex flex-row space-x-10">
+          <div className="flex flex-row space-x-5 md:space-x-10 p-5 md:p-0">
             <button onClick={handleGoBack} type="button" className="outline-none">
-              <AiOutlineArrowLeft className="text-4xl" />
+              <AiOutlineArrowLeft className="text-2xl md:text-4xl" />
             </button>
-            <p className="font-bold text-4xl text-gray-600">{name}</p>
+            <p className="font-bold text-2xl md:text-4xl text-gray-600">{name}</p>
           </div>
           {room.length >= 1 && (
             <div role="button" tabIndex={0} onClick={() => showModal(true)}>
@@ -185,9 +185,9 @@ const ChatRoom = (props) => {
                     <div className="flex flex-row space-x-7">
                       <div className=" flex items-center">
                         {picture === null ? (
-                          <img src={defaultPicture} className="bg-gray-400 w-24 h-24 rounded-full bg-cover" alt="user" />
+                          <img src={defaultPicture} className="bg-gray-400 w-24 h-24 rounded-lg object-cover" alt="user" />
                         ) : (
-                          <img src={`${APP_URL}${picture}`} className="bg-gray-400 w-24 h-24 rounded-full bg-cover" alt="user" />
+                          <img src={`${APP_URL}${picture}`} className="bg-gray-400 w-24 h-24 rounded-lg object-cover" alt="user" />
                         )}
                       </div>
                       <div className="space-y-5 my-10 w-full">
@@ -235,9 +235,9 @@ const ChatRoom = (props) => {
                       </div>
                       <div className=" flex items-center">
                         {signed.picture === null ? (
-                          <img src={defaultPicture} className="bg-gray-400 w-24 h-24 rounded-full bg-cover" alt="user" />
+                          <img src={defaultPicture} className="bg-gray-400 w-24 h-24 rounded-lg object-cover" alt="user" />
                         ) : (
-                          <img src={`${APP_URL}${signed.picture}`} className="bg-gray-400 w-24 h-24 rounded-full" alt="user" />
+                          <img src={`${APP_URL}${signed.picture}`} className="bg-gray-400 w-24 h-24 rounded-lg object-cover" alt="user" />
                         )}
                       </div>
                     </div>

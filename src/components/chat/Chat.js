@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from 'react';
-import { BsSearch } from 'react-icons/bs';
+// import { BsSearch } from 'react-icons/bs';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { useHistory } from 'react-router';
@@ -13,6 +13,7 @@ import './chat.css';
 import ChatRoom from './ChatRoom';
 import defaultPicture from '../../assets/defaultPicture.png';
 import Navbar from '../../navbar/navbar';
+import Search from './Search';
 
 const { REACT_APP_BACKEND_URL: URL } = process.env;
 
@@ -20,7 +21,6 @@ const Chat = (props) => {
   const socket = io(`${URL}`);
   const { latest } = props.chat;
   const signed = props.user.signed[0];
-  const searchData = props.user.search;
   const latestReverse = latest.reverse();
   const [chatRoom, setChatRoom] = useState(false);
   const [userRoom, setUserRoom] = useState([]);
@@ -61,55 +61,13 @@ const Chat = (props) => {
         <Navbar />
       </div>
       <div className="parent-chat">
-        <div className="w-full first-content flex flex-row space-x-14 justify-center px-40 py-24">
-          <div className="search-container rounded-xl flex-1 px-10">
-            <div className="my-14 flex justify-center items-center">
-              <div className="rounded-3xl bg-white flex flex-row items-center p-5 w-72">
-                <BsSearch className="text-2xl mr-3" />
-                <input
-                  value={search}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleSearch();
-                    }
-                  }}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search"
-                  className="w-full outline-none"
-                />
-              </div>
-            </div>
-            <p className="text-sm text-center font-bold mb-14 text-gray-300">Choose anyone you want to talk with</p>
-            <div className="search-content divide-y-2">
-              {searchData.map((userData) => (
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => handleGoToRoom(true, {
-                    id: userData.id,
-                    picture: userData.picture,
-                    name: userData.name,
-                  })}
-                  className="flex flex-row space-x-7 py-4"
-                >
-                  <div>
-                    {userData.picture === null ? (
-                      <img src={defaultPicture} className="w-24 h-24 rounded-full bg-gray-200" alt="user" />
-                    ) : (
-                      <img src={`${URL}${userData.picture}`} className="w-24 h-24 rounded-full bg-gray-200" alt="user" />
-                    )}
-                  </div>
-                  <div className="flex flex-col w-72 space-y-2 h-24 overflow-hidden mb-14">
-                    <p className="text-white font-bold">{userData.username}</p>
-                    <p className="text-white font-bold">{userData.name}</p>
-                    <p className="text-white">
-                      {userData.user_address}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="w-full first-content flex md:flex-row space-x-14 justify-center md:px-40 md:py-24">
+          <Search
+            searchFucn={handleSearch}
+            search={search}
+            setSearch={setSearch}
+            roomFunc={handleGoToRoom}
+          />
           {chatRoom ? (
             <ChatRoom
               chatFunc={handleGoToRoom}
@@ -118,53 +76,48 @@ const Chat = (props) => {
               timeFormat={timeFormat}
             />
           ) : (
-            <div className="flex flex-col space-y-10 w-full">
+            <div className="mobile-chat-parent flex flex-col space-y-10 md:w-full">
               <div className="rounded-xl bg-white p-14">
                 <p className="font-bold text-4xl text-gray-600">Chat Room</p>
               </div>
-              <div className="list">
-                <div>
-                  <div className="space-y-5">
-                    {latestReverse.map((userData) => (
-                      <div
-                        role="button"
-                        tabIndex={0}
-                        key={userData}
-                        onClick={() => handleGoToRoom(true, {
-                          id: userData.id,
-                          picture: userData.picture,
-                          name: userData.name,
-                        })}
-                        className="rounded-xl bg-white p-7 cursor-pointer"
-                      >
-                        <div className="flex justify-center items-center flex-row space-x-7">
-                          <div>
-                            {userData.picture === null ? (
-                              <img src={defaultPicture} className="w-24 h-24 rounded-full bg-cover" alt="user" />
-                            ) : (
-                              <img src={`${URL}${userData.picture}`} className="w-24 h-24 rounded-full bg-cover" alt="user" />
-                            )}
-                          </div>
-                          <div className="space-y-5 my-10 flex-1">
-                            <div className="flex flex-row justify-between ">
-                              <p className="font-bold text-xl text-gray-600">{userData.name}</p>
-                              <p className="font-bold text-gray-400">
-                                {`${new Date(
-                                  userData.created_at,
-                                )
-                                  .toLocaleDateString('en-US', timeFormat)
-                                  .slice(0, 9)}`}
-
-                              </p>
-                            </div>
-                            <p className="h-24 text-xl overflow-hidden">{userData.message}</p>
-                          </div>
-                        </div>
+              <div className="list space-y-5">
+                {latestReverse.map((userData) => (
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    key={userData}
+                    onClick={() => handleGoToRoom(true, {
+                      id: userData.id,
+                      picture: userData.picture,
+                      name: userData.name,
+                    })}
+                    className="mobile-chat-box rounded-xl bg-white md:p-7 cursor-pointer"
+                  >
+                    <div className="flex justify-center items-center flex-row space-x-7">
+                      <div>
+                        {userData.picture === null ? (
+                          <img src={defaultPicture} className="w-24 h-24 rounded-full bg-cover" alt="user" />
+                        ) : (
+                          <img src={`${URL}${userData.picture}`} className="w-24 h-24 rounded-full bg-cover" alt="user" />
+                        )}
                       </div>
-                    ))}
-                  </div>
-                </div>
+                      <div className="space-y-5 my-10 flex-1">
+                        <div className="flex flex-row justify-between ">
+                          <p className="font-bold text-xl text-gray-600">{userData.name}</p>
+                          <p className="font-bold text-gray-400">
+                            {`${new Date(
+                              userData.created_at,
+                            )
+                              .toLocaleDateString('en-US', timeFormat)
+                              .slice(0, 9)}`}
 
+                          </p>
+                        </div>
+                        <p className="h-24 text-xl overflow-hidden">{userData.message}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}

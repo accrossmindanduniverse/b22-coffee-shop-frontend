@@ -3,6 +3,7 @@
   background-image: url('../../assets/chat-bg.png');
   background-position: center;
   background-size: cover;
+  overflow-x: hidden;
   width: 100vw;
   height: 100vh;
 }
@@ -48,5 +49,60 @@
 
 .search-container {
   background-color: #6A4029;
+  width: 20vw;
+  height: 80vh;
+}
+
+.mobile-search {
+  background-color: #6A4029;
+  height: 100vh;
   width: 80vw;
+  border-radius: 15px;
+}
+
+.search-modal {
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+}
+
+@media only screen and (max-width: 600px) {
+  .first-content {
+    display: flex;
+    flex-direction: column;
+  }
+  /* .search-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  } */
+  .parent-chat {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  /* .mobile-chat-room {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  } */
+  .mobile-chat-box {
+    padding: 10px;
+  }
+  .mobile-chat-room-parent {
+    right: 50px;
+    padding: 15px;
+    position: relative;
+    height: 80vh;
+  }
+  .mobile-chat-parent {
+    right: 30px;
+    position: relative;
+    height: 80vh;
+  }
 }
