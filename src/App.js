@@ -17,10 +17,10 @@ import Profile from './components/user/profile';
 import History from './components/history/history';
 import Cart2 from './components/cart/cart2';
 import ConfirmPassword from './components/user/ConfirmPassword';
-import EditPassword from './components/user/EditPassword';
 import Chat from './components/chat/Chat';
 import { getChat, getChatRoom } from './redux/actions/chat';
 import ChatRoom from './components/chat/ChatRoom';
+import EditPassword from './components/user/EditPassword';
 
 const App = (props) => (
   <BrowserRouter>
