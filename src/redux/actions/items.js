@@ -11,7 +11,6 @@ export const getItemsCategory = () => async (dispatch) => {
         items: data.data
       }
     });
-    console.log(data);
   } catch (err) {
     console.log(err);
   }

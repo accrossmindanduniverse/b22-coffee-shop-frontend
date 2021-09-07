@@ -34,8 +34,6 @@ const SignIn = (props) => {
     }
   }, [errMsg]);
 
-  console.log(errMsg);
-
   return (
     <div className="overflow-x-hidden">
       <div className="flex flex-col md:flex-row bg-gray-100">

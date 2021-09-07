@@ -17,7 +17,6 @@ export const updateProfile = (token, id, userData) => async (dispatch) => {
       type: 'UPDATE_PROFILE',
       payload: data.data
     });
-    console.log(data);
   } catch (err) {
     dispatch({
       type: 'UPDATE_PROFILE_FAILED',
@@ -73,11 +72,9 @@ export const confirmPassword = (token, setData) => async (dispatch) => {
 };
 
 export const editPassword = (token, setData) => async (dispatch) => {
-  console.log(setData, 'test password');
   const form = new URLSearchParams();
   form.append('password', setData.password);
   form.append('resendPassword', setData.resendPassword);
-  console.log(form, 'form change');
   try {
     const { data } = await http(token).patch(`${URL}/user/update-password`, form);
     dispatch({

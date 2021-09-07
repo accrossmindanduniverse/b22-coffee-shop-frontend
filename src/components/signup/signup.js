@@ -13,7 +13,7 @@ import Footer from '../footer/footer';
 const SignUp = (props) => {
   const history = useHistory();
 
-  const { errMsg, signUp } = props.auth;
+  const { errMsg } = props.auth;
   const [state, setState] = useState({
     username: '',
     password: ''
@@ -39,15 +39,6 @@ const SignUp = (props) => {
       console.log(res, 'signup result');
     });
   };
-
-  console.log(props.auth, 'debug for errro');
-
-  // const signUpClick = () => {
-  //   handleSignUp();
-  //   }
-  // };
-
-  console.log(signUp[0], 'test123123');
 
   useEffect(() => {
     if (props.auth.signup !== undefined) {

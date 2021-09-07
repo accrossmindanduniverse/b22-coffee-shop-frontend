@@ -76,8 +76,6 @@ const Transaction = (props) => {
     mapAllItemsId(props.cart.items);
   }, [props.cart.items]);
 
-  console.log(signed[0], 'test');
-
   useEffect(() => {
     setTimeout(() => {
       if (customAlert) {

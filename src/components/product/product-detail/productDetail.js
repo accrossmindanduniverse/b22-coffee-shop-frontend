@@ -62,8 +62,6 @@ function ProductDetail(props) {
     props.addItems(sendDataToCart.data1, sendDataToCart.data2);
   };
 
-  console.log(defaultAmount, 'default');
-
   const handleTwoEvents = () => {
     setDefaultAmount(true);
     getDataFromChild();

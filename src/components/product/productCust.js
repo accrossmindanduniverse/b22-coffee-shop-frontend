@@ -78,8 +78,6 @@ const ProductCust = (props) => {
     }
   }, [tab, urlParams.search, urlParams.page]);
 
-  console.log(urlParams, 'product');
-
   return (
     <div className="parent overflow-x-hidden">
       <div>

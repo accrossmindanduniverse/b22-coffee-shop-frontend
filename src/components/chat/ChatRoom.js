@@ -40,8 +40,6 @@ const ChatRoom = (props) => {
     bottomView.current?.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
   };
 
-  console.log(props, 'test props123');
-
   const handleSendChat = () => {
     if (chatData.message !== '') {
       props.sendChat(token, chatData).then(() => {

@@ -40,8 +40,6 @@ const History = (props) => {
     });
   };
 
-  console.log(token, 'history');
-
   const showModal = (visible) => {
     setModal({
       ...modal,
@@ -55,8 +53,6 @@ const History = (props) => {
       onClick: data
     });
   };
-
-  console.log(checkBox);
 
   const saveItemToDelete = (item) => {
     setDeleteItem(item);
@@ -74,8 +70,6 @@ const History = (props) => {
       props.getAllTransactions(refreshToken.token, token.id);
     }
   }, [deleteItem]);
-
-  console.log(deleteItem, 'test123123');
 
   const getAllItemTransactions = () => {
     props.getAllTransactions(refreshToken.token, token.id);

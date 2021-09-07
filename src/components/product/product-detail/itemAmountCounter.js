@@ -25,8 +25,6 @@ const ItemAmountCounter = (props) => {
     props.addItems(data1st, data2nd);
   };
 
-  console.log(props.defaultAmount, 'amount props');
-
   useEffect(() => {
     if (props.defaultAmount) {
       setAmount(1);

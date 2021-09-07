@@ -23,7 +23,6 @@ export const finalTransaction = (token, transaction) => async (dispatch) => {
       type: 'POST_TRANSACTION',
       payload: data.data
     });
-    console.log(data.data);
   } catch (err) {
     console.log(err);
   }

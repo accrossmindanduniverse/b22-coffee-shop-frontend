@@ -7,7 +7,6 @@ import { FiSearch, FiChevronDown } from 'react-icons/fi';
 import { searchItem } from '../../redux/actions/items';
 
 const Search = (props) => {
-  console.log(props.items);
   const { newPageInfo, urlParams } = props;
   const history = useHistory();
   const [searchClick, setSearchClick] = useState({
@@ -26,7 +25,6 @@ const Search = (props) => {
 
   const handleSearch = (e) => {
     // eslint-disable-next-line max-len
-    console.log(e.target.value);
     if (e.key === 'Enter') {
       setSearchData({
         ...searchData,
@@ -142,7 +140,6 @@ const Search = (props) => {
 
 Search.defaultProps = {
   searchItem: () => {},
-  items: [],
   urlParams: [],
   newPageInfo: []
 };
@@ -150,14 +147,9 @@ Search.defaultProps = {
 Search.propTypes = {
   searchItem: PropTypes.func,
   urlParams: PropTypes.node,
-  items: PropTypes.node,
   newPageInfo: PropTypes.node
 };
 
-const mapStateToProps = (state) => ({
-  items: state.items
-});
-
 const mapDispatchToProps = { searchItem };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(null, mapDispatchToProps)(Search);
