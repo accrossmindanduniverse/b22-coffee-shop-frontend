@@ -32,7 +32,7 @@ const History = (props) => {
         onClick: false
       });
       setDeleteItem([]);
-      props.getAllTransactions(refreshToken.token, token.id);
+      props.getAllTransactions(refreshToken?.token, token.id);
       setCheckBox({
         ...checkBox,
         onClick: false
@@ -67,12 +67,12 @@ const History = (props) => {
 
   useEffect(() => {
     if (deleteItem.length === 0) {
-      props.getAllTransactions(refreshToken.token, token.id);
+      props.getAllTransactions(refreshToken?.token, token.id);
     }
   }, [deleteItem]);
 
   const getAllItemTransactions = () => {
-    props.getAllTransactions(refreshToken.token, token.id);
+    props.getAllTransactions(refreshToken?.token, token.id);
   };
 
   useEffect(() => {

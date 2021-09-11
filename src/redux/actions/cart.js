@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import { http } from '../../helpers/http';
 
-const { REACT_APP_BACKEND_URL: URL } = process.env;
+// const { REACT_APP_BACKEND_URL: URL } = process.env;
+const URL = 'http://localhost:8000';
 
 export const addItems = (amount, data2nd) => ({
   type: 'CART_ADD_ITEMS',

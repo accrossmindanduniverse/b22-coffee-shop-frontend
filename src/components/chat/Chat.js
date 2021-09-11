@@ -42,17 +42,17 @@ const Chat = (props) => {
 
   useEffect(() => {
     socket.on(props.auth.token.id, () => {
-      props.getChat(props.auth.refreshToken.token);
+      props.getChat(props.auth.refreshToken?.token);
     });
   }, []);
 
   const handleSearch = () => {
-    props.searchUser(props.auth.refreshToken.token, search);
+    props.searchUser(props.auth.refreshToken?.token, search);
     props.getErrorDefault();
   };
 
   useEffect(() => {
-    props.getChat(props.auth.refreshToken.token);
+    props.getChat(props.auth.refreshToken?.token);
   }, []);
 
   return (
