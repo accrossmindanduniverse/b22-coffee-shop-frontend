@@ -1,6 +1,7 @@
 import { http } from '../../helpers/http';
 
-const { REACT_APP_BACKEND_URL: URL } = process.env;
+// const { REACT_APP_BACKEND_URL: URL } = process.env;
+const URL = 'https://historycoffee.herokuapp.com';
 
 export const toggleAuth = () => ({
   type: 'AUTH_TOGGLE'

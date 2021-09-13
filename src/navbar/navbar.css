@@ -24,3 +24,21 @@
   top: 0px;
   left: 0px;
 }
+
+.clock {
+  border-width: thin;
+  border-radius: 10px;
+  box-shadow: 1px 3px 9px #6A4029;
+}
+
+.times {
+  font-family: Poppins;
+  font-weight: bold;
+  color: #6A4029;
+}
+
+.date {
+  font-family: Poppins;
+  font-weight: lighter;
+  color: #FFBA33;
+}

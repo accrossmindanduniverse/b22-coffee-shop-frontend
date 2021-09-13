@@ -11,6 +11,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import coffee1 from '../assets/coffee-1.png';
 import { authSignOut } from '../redux/actions/auth';
 import { getUserSigned } from '../redux/actions/user';
+import NavbarClock from './NavbarClock';
 
 const Navbar = (props) => {
   const { REACT_APP_BACKEND_URL: URL } = process.env;
@@ -78,15 +79,17 @@ const Navbar = (props) => {
                 <TiMessages className="text-4xl text-black" />
               </Link>
             </div>
-              {/* <Link> */}
-              {/* </Link> */}
-              <button type="button" onClick={handleSignOut} className="rounded-lg flex primary-btn">
+            <div className="m-5">
+              <NavbarClock />
+              <button type="button" onClick={handleSignOut} className="rounded-lg flex primary-btn mt-3">
                 <p className="mt-2 mb-2 mr-7 ml-7">Sign Out</p>
               </button>
             </div>
+            </div>
           ) : (
-            <div className="flex flex-col justify-center items-center mb-10">
-              <Link to="/signin" className="font-bold ">Sign In</Link>
+            <div className="flex flex-col justify-center items-center mb-10 px-14">
+              <NavbarClock />
+              <Link to="/signin" className="font-bold">Sign In</Link>
               <Link to="/signup" className="rounded-full flex items-center primary-btn">
                 <p className="mt-2 mb-2 mr-14 ml-14">Sign Up</p>
               </Link>
@@ -117,6 +120,7 @@ const Navbar = (props) => {
           {
           props.auth.token !== null ? (
             <div className="flex flex-row space-x-8 items-center">
+              <NavbarClock />
               <Link to="/profile">
               {signed[0]?.picture !== null ? (
                 <div className="flex justify-center items-center">
@@ -134,7 +138,8 @@ const Navbar = (props) => {
               </button>
             </div>
           ) : (
-            <div className="flex flex-row">
+            <div className="flex flex-row space-x-20">
+              <NavbarClock />
               <Link to="/signin" className="flex justify-center items-center font-bold right-7 relative">Sign In</Link>
               <Link to="/signup" className="rounded-full flex justify-center items-center primary-btn">
                 <p className="mt-2 mb-2 mr-14 ml-14">Sign Up</p>
