@@ -64,9 +64,7 @@ export const authRefreshToken = (token, setData) => async (dispatch) => {
 };
 
 export const errorDefault = () => (dispatch) => {
-  setTimeout(() => {
-    dispatch({
-      type: 'ERROR_DEFAULT'
-    });
-  }, 3000);
+  dispatch({
+    type: 'ERROR_DEFAULT'
+  });
 };

@@ -1,6 +1,7 @@
 const initialState = {
   onAuth: false,
   signUp: [{}],
+  signUpToggle: false,
   refreshToken: null,
   token: null,
   errMsg: ''
@@ -8,16 +9,11 @@ const initialState = {
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
-    case 'AUTH_TOGGLE': {
-      return {
-        ...state,
-        onAuth: !state.onAuth
-      };
-    }
     case 'AUTH_SIGNIN': {
       return {
         ...state,
-        token: action.payload
+        token: action.payload,
+        onAuth: !state.onAuth
       };
     }
     case 'REFRESH_TOKEN': {
@@ -36,7 +32,6 @@ const auth = (state = initialState, action) => {
       return initialState;
     }
     case 'AUTH_SIGNIN_REJECTED': {
-      console.log(action.err);
       return {
         ...state,
         errMsg: action.err,
@@ -46,7 +41,7 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         signUp: action.payload,
-        onAuth: !state.onAuth,
+        signUpToggle: !state.signUpToggle
       };
     }
     case 'AUTH_SIGNUP_REJECTED': {
@@ -61,7 +56,7 @@ const auth = (state = initialState, action) => {
         ...state,
         errMsg: '',
         onAuth: false,
-        token: null,
+        signUpToggle: false,
         signUp: [{}]
       };
     }

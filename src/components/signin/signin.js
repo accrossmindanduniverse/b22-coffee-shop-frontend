@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import React, { useState, useEffect } from 'react';
 import './signin.css';
 import { PropTypes } from 'prop-types';
@@ -15,24 +16,28 @@ const SignIn = (props) => {
     username: '',
     password: ''
   });
+  const { token, onAuth } = props.auth;
 
   const handleSignIn = () => {
     props.authSignIn(signIn.username, signIn.password);
   };
 
   useEffect(() => {
-    const { token } = props.auth;
-    if (token !== null) {
-      props.toggleAuth();
+    if (token !== null && onAuth === true) {
+      props.errorDefault();
       history.push('/');
     }
-  });
+  }, [token, onAuth]);
+
+  console.log(token, 'auth');
 
   useEffect(() => {
-    if (errMsg !== '') {
-      props.errorDefault();
+    if (signIn.username === '' && signIn.password === '') {
+      setTimeout(() => {
+        props.errorDefault();
+      }, 1000);
     }
-  }, [errMsg]);
+  }, [signIn.username, signIn.password]);
 
   return (
     <div className="overflow-x-hidden">

@@ -13,59 +13,57 @@ import Footer from '../footer/footer';
 const SignUp = (props) => {
   const history = useHistory();
 
-  const { errMsg } = props.auth;
+  const { errMsg, signUpToggle } = props.auth;
   const [state, setState] = useState({
     username: '',
     password: ''
   });
-  const [modal, setModal] = useState({
-    clicked: false
-  });
-
-  const showModal = (visible) => {
-    setModal({
-      ...modal,
-      clicked: visible
-    });
-  };
+  const [modal, setModal] = useState(false);
+  const [isClick, setIsClick] = useState(false);
 
   const handleSignUp = () => {
-    props.authSignUp(state.username, state.password).then((res) => {
+    props.authSignUp(state.username, state.password).then(() => {
       setState({
         ...state,
         username: '',
         password: ''
       });
-      console.log(res, 'signup result');
     });
+    setIsClick(true);
   };
 
   useEffect(() => {
-    if (props.auth.signup !== undefined) {
-      showModal(true);
+    if (isClick) {
+      if (signUpToggle) {
+        props.errorDefault();
+        setModal(true);
+      }
     }
-  }, []);
+  }, [signUpToggle]);
 
   useEffect(() => {
-    setTimeout(() => {
-      showModal(false);
-    }, 3000, () => {
-      history.push('/signin');
-    });
-  }, [modal.clicked]);
+    if (modal) {
+      setTimeout(() => {
+        setModal(false);
+        history.push('/signin');
+      }, 2000, () => {
+      });
+    }
+  }, [modal]);
 
   useEffect(() => {
-    if (errMsg !== '') props.errorDefault();
-  }, [errMsg]);
+    if (state.username === '' && state.password === '') {
+      setTimeout(() => {
+        props.errorDefault();
+      }, 1000);
+    }
+  }, [state.username, state.password]);
 
   return (
     <div>
-      {modal.clicked && (
+      {modal && (
       <div
-        onChange={() => setModal({
-          ...modal,
-          clicked: true
-        })}
+        onChange={() => setModal(true)}
         className="modal w-screen h-screen"
       >
         <div className="bg-white relative top-96 ml-14 mr-14 md:ml-96 md:mr-96 rounded-md justify-center items-center flex">
