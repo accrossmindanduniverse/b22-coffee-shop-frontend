@@ -19,7 +19,7 @@ import './chat.css';
 const URL = 'https://historycoffee.herokuapp.com';
 
 const ChatRoom = (props) => {
-  const socket = io(`${APP_URL}`);
+  const socket = io(`${URL}`);
   const { token } = props.auth.refreshToken;
   const signed = props.user.signed[0];
   const time = props.timeFormat;
@@ -158,10 +158,10 @@ const ChatRoom = (props) => {
                     <div>
                       {data.file.slice(19) === '.jpg' || data.file.slice(19) === '.png' || data.file.slice(19) === '.img' || data.file.slice(19) === '.jpeg' ? (
                         <div className="mb-4">
-                          <img className="w-44 h-44 rounded-lg" src={`${APP_URL}${data.file}`} alt="user" />
+                          <img className="w-44 h-44 rounded-lg" src={`${URL}${data.file}`} alt="user" />
                           {downloadUrl === '' ? (
                             <div>
-                              <AiOutlineDownload role="button" tabIndex={0} onClick={() => handleDownload(`${APP_URL}${data.file}`)} className="text-4xl text-white" />
+                              <AiOutlineDownload role="button" tabIndex={0} onClick={() => handleDownload(`${URL}${data.file}`)} className="text-4xl text-white" />
                             </div>
                           ) : (
                             <a className="flex flex-row" href={downloadUrl} download>
@@ -171,7 +171,7 @@ const ChatRoom = (props) => {
                         </div>
                       ) : (
                         <div className="w-44 h-44 mb-4 rounded-lg bg-white flex justify-center items-center">
-                          <a className="flex flex-row justify-center" href={`${APP_URL}${data.file}`} download="download">
+                          <a className="flex flex-row justify-center" href={`${URL}${data.file}`} download="download">
                             <AiOutlineDownload className="text-2xl text-gray-600" />
                             <p className="text-xl">{data.file.slice(20)}</p>
                           </a>
@@ -185,7 +185,7 @@ const ChatRoom = (props) => {
                         {picture === null ? (
                           <img src={defaultPicture} className="bg-gray-400 w-24 h-24 rounded-lg object-cover" alt="user" />
                         ) : (
-                          <img src={`${APP_URL}${picture}`} className="bg-gray-400 w-24 h-24 rounded-lg object-cover" alt="user" />
+                          <img src={`${URL}${picture}`} className="bg-gray-400 w-24 h-24 rounded-lg object-cover" alt="user" />
                         )}
                       </div>
                       <div className="space-y-5 my-10 w-full">
@@ -207,11 +207,11 @@ const ChatRoom = (props) => {
                   <div className="flex justify-end">
                     {data.file.slice(19) === '.jpg' || data.file.slice(19) === '.png' || data.file.slice(19) === '.img' ? (
                       <div className="mb-4">
-                        <img className="w-44 h-44 rounded-lg" src={`${APP_URL}${data.file}`} alt="user" />
+                        <img className="w-44 h-44 rounded-lg" src={`${URL}${data.file}`} alt="user" />
                       </div>
                     ) : (
                       <div className="w-44 h-44 mb-4 rounded-lg bg-white flex justify-center items-center">
-                        <a className="flex flex-row justify-center" href={`${APP_URL}${data.file}`}>
+                        <a className="flex flex-row justify-center" href={`${URL}${data.file}`}>
                           <p className="text-xl">{data.file.slice(20)}</p>
                         </a>
                       </div>
@@ -235,7 +235,7 @@ const ChatRoom = (props) => {
                         {signed.picture === null ? (
                           <img src={defaultPicture} className="bg-gray-400 w-24 h-24 rounded-lg object-cover" alt="user" />
                         ) : (
-                          <img src={`${APP_URL}${signed.picture}`} className="bg-gray-400 w-24 h-24 rounded-lg object-cover" alt="user" />
+                          <img src={`${URL}${signed.picture}`} className="bg-gray-400 w-24 h-24 rounded-lg object-cover" alt="user" />
                         )}
                       </div>
                     </div>
