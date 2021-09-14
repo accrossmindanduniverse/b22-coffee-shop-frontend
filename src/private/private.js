@@ -4,12 +4,12 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const Private = ({ children, auth, ...rest }) => {
-  const { onAuth, token } = auth;
+  const { token } = auth;
   return (
     <Route
       {...rest}
       render={() => {
-        if (!onAuth || token === null) {
+        if (token === null) {
           return (<Redirect to="/signin" />);
         }
         return (children);
