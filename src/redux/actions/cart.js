@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { http } from '../../helpers/http';
 
-const { REACT_APP_BACKEND_URL: URL } = process.env;
+const URL = 'https://historycoffee.herokuapp.com';
 
 export const addItems = (amount, data2nd) => ({
   type: 'CART_ADD_ITEMS',

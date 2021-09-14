@@ -15,7 +15,7 @@ import defaultPicture from '../../assets/defaultPicture.png';
 import Navbar from '../../navbar/navbar';
 import Search from './Search';
 
-const { REACT_APP_BACKEND_URL: URL } = process.env;
+const URL = 'https://historycoffee.herokuapp.com';
 
 const Chat = (props) => {
   const socket = io(`${URL}`);

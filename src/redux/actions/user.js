@@ -1,6 +1,6 @@
 import { http } from '../../helpers/http';
 
-const { REACT_APP_BACKEND_URL: URL } = process.env;
+const URL = 'https://historycoffee.herokuapp.com';
 
 export const updateProfile = (token, id, userData) => async (dispatch) => {
   const formData = new FormData();

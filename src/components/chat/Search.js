@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import defaultPicture from '../../assets/defaultPicture.png';
 
 const Search = (props) => {
-  const { REACT_APP_BACKEND_URL: URL } = process.env;
+  const URL = 'https://historycoffee.herokuapp.com';
   const [modal, setModal] = useState(false);
 
   const searchData = props.user.search;

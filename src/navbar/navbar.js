@@ -16,7 +16,7 @@ import { getUserSigned } from '../redux/actions/user';
 import NavbarClock from './NavbarClock';
 
 const Navbar = (props) => {
-  const { REACT_APP_BACKEND_URL: URL } = process.env;
+  const URL = 'https://historycoffee.herokuapp.com';
   const { signed } = useSelector((state) => state.user);
   const [modal, setModal] = useState(false);
 

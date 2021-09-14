@@ -16,7 +16,7 @@ import {
 import defaultPicture from '../../assets/defaultPicture.png';
 import './chat.css';
 
-const { REACT_APP_BACKEND_URL: APP_URL } = process.env;
+const URL = 'https://historycoffee.herokuapp.com';
 
 const ChatRoom = (props) => {
   const socket = io(`${APP_URL}`);
