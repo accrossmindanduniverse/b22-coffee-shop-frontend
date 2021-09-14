@@ -5,7 +5,29 @@
 }
 
 .modal-parent {
-  height: 700px;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  
+}
+
+.close-btn {
+  width: 25px;
+  height: 25px;
+  border-radius: 25px;
+  background-color: #fff;
+  animation-duration: 2s;
+  animation-name: close;
+}
+
+@keyframes close {
+  0% {
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    transform: rotate(160deg);
+    background-color:#c2c2c2;
+  }
 }
 
 .primary-btn {

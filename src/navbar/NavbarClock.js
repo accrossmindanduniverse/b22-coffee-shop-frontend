@@ -18,8 +18,12 @@ const NavbarClock = () => {
       ? `0${date.getMinutes()}`
       : `${date.getMinutes()}`;
 
+    const newHours = date.getHours() < 10
+      ? `0${date.getHours()}`
+      : `${date.getHours()}`;
+
     setTimeout(() => {
-      setTimes(`${date.getHours()}:
+      setTimes(`${newHours}:
       ${newMinutes}:
       ${newSeconds}`);
     }, 1000);

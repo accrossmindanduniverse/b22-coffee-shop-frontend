@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/jsx-indent */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
@@ -39,14 +41,14 @@ const Navbar = (props) => {
     <div>
     <div className="flex flex-col mt-10 mb-10 items-end justify-end md:hidden">
     {modal ? (
-      <AiOutlineClose onClick={() => hamburgerVisible(true)} className="text-black font-bold text-2xl mr-14 z-10" />
+      <AiOutlineClose onClick={() => hamburgerVisible(true)} className="text-black font-bold text-2xl mr-14 z-10 close-btn" />
     ) : (
       <GiHamburgerMenu onClick={() => hamburgerVisible(true)} className="text-black font-bold text-2xl mr-14 z-10" />
     )}
       {modal && (
-      <div onChange={() => setModal(true)} className="hamburger h-screen w-screen">
-      <div className="bg-white modal-parent top-20 relative ml-24 rounded-l-2xl flex items-center">
-        <div className="bg-white relative flex flex-col rounded-l-xl left-5 shadow-2xl">
+      <div onChange={() => setModal(true)} className="hamburger h-screen w-screen pl-20">
+      <div onClick={() => setModal(true)} className="bg-white modal-parent top-20 relative rounded-l-2xl flex items-center">
+        <div className="bg-white modal relative flex flex-col rounded-l-xl p-3 shadow-2xl">
           <div className="flex flex-row m-10">
             <img className="object-contain" src={coffee1} alt="" />
             <p className="font-bold text-xl relative left-3">
@@ -79,10 +81,10 @@ const Navbar = (props) => {
                 <TiMessages className="text-4xl text-black" />
               </Link>
             </div>
-            <div className="m-5">
+            <div>
               <NavbarClock />
-              <button type="button" onClick={handleSignOut} className="rounded-lg flex primary-btn mt-3">
-                <p className="mt-2 mb-2 mr-7 ml-7">Sign Out</p>
+              <button type="button" onClick={handleSignOut} className="rounded-lg p-4 flex primary-btn mt-3">
+                <p>Sign Out</p>
               </button>
             </div>
             </div>
@@ -90,8 +92,8 @@ const Navbar = (props) => {
             <div className="flex flex-col justify-center items-center mb-10 px-14">
               <NavbarClock />
               <Link to="/signin" className="font-bold">Sign In</Link>
-              <Link to="/signup" className="rounded-full flex items-center primary-btn">
-                <p className="mt-2 mb-2 mr-14 ml-14">Sign Up</p>
+              <Link to="/signup" className="rounded-lg flex items-center primary-btn p-4">
+                <p>Sign Up</p>
               </Link>
             </div>
           )
