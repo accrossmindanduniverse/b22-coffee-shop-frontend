@@ -13,7 +13,6 @@ import { AiOutlineClose } from 'react-icons/ai';
 import coffee1 from '../assets/coffee-1.png';
 import { authSignOut } from '../redux/actions/auth';
 import { getUserSigned } from '../redux/actions/user';
-import NavbarClock from './NavbarClock';
 
 const Navbar = (props) => {
   const URL = 'https://historycoffee.herokuapp.com';
@@ -46,9 +45,9 @@ const Navbar = (props) => {
       <GiHamburgerMenu onClick={() => hamburgerVisible(true)} className="text-black font-bold text-2xl mr-14 z-10" />
     )}
       {modal && (
-      <div onChange={() => setModal(true)} className="hamburger h-screen w-screen pl-20">
+      <div onClick={() => setModal(false)} className="hamburger h-screen w-screen pl-20">
       <div onClick={() => setModal(true)} className="bg-white modal-parent top-20 relative rounded-l-2xl flex items-center">
-        <div className="bg-white modal relative flex flex-col rounded-l-xl p-3 shadow-2xl">
+        <div onKeyPress={(e) => modal && e.preventDefault()} className="bg-white modal relative flex flex-col rounded-l-xl p-3 shadow-2xl">
           <div className="flex flex-row m-10">
             <img className="object-contain" src={coffee1} alt="" />
             <p className="font-bold text-xl relative left-3">
@@ -82,7 +81,6 @@ const Navbar = (props) => {
               </Link>
             </div>
             <div>
-              <NavbarClock />
               <button type="button" onClick={handleSignOut} className="rounded-lg p-4 flex primary-btn mt-3">
                 <p>Sign Out</p>
               </button>
@@ -90,7 +88,6 @@ const Navbar = (props) => {
             </div>
           ) : (
             <div className="flex flex-col justify-center items-center mb-10 px-14">
-              <NavbarClock />
               <Link to="/signin" className="font-bold">Sign In</Link>
               <Link to="/signup" className="rounded-lg flex items-center primary-btn p-4">
                 <p>Sign Up</p>
@@ -122,7 +119,6 @@ const Navbar = (props) => {
           {
           props.auth.token !== null ? (
             <div className="flex flex-row space-x-8 items-center">
-              <NavbarClock />
               <Link to="/profile">
               {signed[0]?.picture !== null ? (
                 <div className="flex justify-center items-center">
@@ -141,7 +137,6 @@ const Navbar = (props) => {
             </div>
           ) : (
             <div className="flex flex-row space-x-20">
-              <NavbarClock />
               <Link to="/signin" className="flex justify-center items-center font-bold right-7 relative">Sign In</Link>
               <Link to="/signup" className="rounded-full flex justify-center items-center primary-btn">
                 <p className="mt-2 mb-2 mr-14 ml-14">Sign Up</p>

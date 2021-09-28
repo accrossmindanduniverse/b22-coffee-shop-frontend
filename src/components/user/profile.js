@@ -13,7 +13,7 @@ import {
   getUserSigned, updateProfile, uploadPicture, uploadErrorDefault
 } from '../../redux/actions/user';
 
-const URL = 'https://historycoffee.herokuapp.com';
+const URL = 'http://localhost:8000';
 
 const Profile = (props) => {
   const history = useHistory();

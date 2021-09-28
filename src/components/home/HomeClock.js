@@ -1,7 +1,6 @@
 import React from 'react';
-import './navbar.css';
 
-const NavbarClock = () => {
+const HomeClock = () => {
   const date = new Date();
   const month = ['Jan', 'Feb',
     'Mar', 'Apr', 'May', 'Jun',
@@ -30,7 +29,7 @@ const NavbarClock = () => {
   }, [times]);
 
   return (
-    <div className="clock">
+    <div className="clock p-4">
       <p className="times">{times}</p>
       <p className="date">
         {`${month[date.getMonth()]} 
@@ -41,4 +40,4 @@ const NavbarClock = () => {
   );
 };
 
-export default NavbarClock;
+export default HomeClock;

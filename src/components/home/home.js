@@ -25,6 +25,7 @@ import './home.css';
 import teamWork from '../../assets/team-work.png';
 import Footer from '../footer/footer';
 import { authRefreshToken } from '../../redux/actions/auth';
+import HomeClock from './HomeClock';
 
 function Home(props) {
   const history = useHistory();
@@ -45,7 +46,10 @@ function Home(props) {
       <div>
         <div className="banner w-screen">
           <div className="flex items-center md:items-start flex-col space-y-10 pt-7">
-            <div className="md:space-y-44 w-80 md:ml-44 md:w-full md:max-w-2xl">
+            <div className="md:ml-44 h-24">
+              <HomeClock />
+            </div>
+            <div className="md:space-y-32 w-80 md:ml-44 md:w-full md:max-w-2xl">
               <div className="md:top-14 relative">
                 <p className="font-bold text-6xl text-white">Start Your Day with Coffee and Good Meals</p>
               </div>
